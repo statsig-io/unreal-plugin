@@ -1,3 +1,9 @@
 [submodule "ThirdParty/statsig-cpp-client-sdk"]
 	path = ThirdParty/statsig-cpp-client-sdk
 	url = https://github.com/statsig-io/cpp-client-sdk.git
+[submodule "ThirdParty/nlohmann-json"]
+	path = ThirdParty/nlohmann-json
+	url = https://github.com/nlohmann/json.git
+[submodule "ThirdParty/yhirose-httplib"]
+	path = ThirdParty/yhirose-httplib
+	url = https://github.com/yhirose/cpp-httplib.git

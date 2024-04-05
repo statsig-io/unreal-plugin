@@ -1,11 +1,10 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
-#include "StatsigUnreal.h"
+#include "StatsigUnrealPlugin.h"
 
 #define LOCTEXT_NAMESPACE "FStatsigUnrealModule"
 
 void FStatsigUnrealModule::StartupModule()
 {
+
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 }
 
@@ -16,5 +15,5 @@ void FStatsigUnrealModule::ShutdownModule()
 }
 
 #undef LOCTEXT_NAMESPACE
-	
+
 IMPLEMENT_MODULE(FStatsigUnrealModule, StatsigUnreal)
