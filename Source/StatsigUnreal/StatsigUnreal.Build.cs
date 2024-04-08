@@ -12,7 +12,8 @@ public class StatsigUnreal : ModuleRules
 			new string[]
 			{
 				"Core",
-				// ... add other public dependencies that you statically link with here ...
+				"HTTP",
+				"Json"
 			}
 		);
 
@@ -31,6 +32,7 @@ public class StatsigUnreal : ModuleRules
 		PrivateIncludePaths.AddRange(
 			new string[] {
 				"StatsigUnreal/Private",
+				"StatsigUnreal/Private/unreal_data_types",
 				"StatsigUnreal/Private/sdk",
 				"StatsigUnreal/Private/sdk/include",
 				"StatsigUnreal/Private/sdk/src"
@@ -41,6 +43,7 @@ public class StatsigUnreal : ModuleRules
 			new string[] {
 				Path.Combine(ModuleDirectory, "Private"),
 				Path.Combine(ModuleDirectory, "Private/sdk"),
+				Path.Combine(ModuleDirectory, "Private/unreal_data_types"),
 				Path.Combine(ModuleDirectory, "Private/sdk/include"),
 				Path.Combine(ModuleDirectory, "Private/sdk/src"),
 			}

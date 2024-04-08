@@ -15,7 +15,8 @@ struct ErrorBoundaryRequestArgs {
 
 #include "data_types/json_parser.hpp"
 #include "constants.h"
-#include "network_compat.hpp"
+// #include "network_compat.hpp"
+#include "UnrealNetworkCompat.hpp"
 #include <set>
 
 namespace statsig::internal {
@@ -24,7 +25,11 @@ class ErrorBoundary {
  public:
   using string = std::string;
 
-  explicit ErrorBoundary(string &sdk_key) : sdk_key_(sdk_key) {}
+  explicit ErrorBoundary(const string &sdk_key) : sdk_key_(sdk_key)
+  {
+    auto a = sdk_key_;
+    auto b= sdk_key;
+  }
 
   inline static string eb_api = constants::kDefaultApi;
 
@@ -41,7 +46,7 @@ class ErrorBoundary {
   }
 
  private:
-  string &sdk_key_;
+  const string &sdk_key_;
   std::set<string> seen_;
 
   void LogError(
@@ -67,7 +72,11 @@ class ErrorBoundary {
           eb_api,
           "/v1/sdk_exception",
           headers,
-          Json::Serialize(body)
+          Json::Serialize(body),
+          [](HttpResponse)
+          {
+            // noop
+          }
       );
     } catch (std::exception &_) {
       // noop

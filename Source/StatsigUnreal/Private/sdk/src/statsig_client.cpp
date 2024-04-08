@@ -1,11 +1,9 @@
 #include "statsig/statsig_client.h"
+#include "statsig/statsig_event.h"
 
 #include <utility>
 
 #include "statsig_context.hpp"
-
-
-#include "statsig/statsig_event.h"
 #include "evaluation_details_internal.hpp"
 
 #define INIT_GUARD(result) do { if (!EnsureInitialized(__func__)) { return result; }} while(0)
@@ -52,7 +50,7 @@ void StatsigClient::InitializeAsync(
 void StatsigClient::UpdateUserSync(const statsig::StatsigUser &user) {
   INIT_GUARD();
 
-  EB(([this, &user]() {
+  // EB(([this, &user]() {
     context_->user = user;
     context_->store.Reset();
 
@@ -70,7 +68,7 @@ void StatsigClient::UpdateUserSync(const statsig::StatsigUser &user) {
           }
       );
     }).detach();
-  }));
+  // }));
 }
 
 void StatsigClient::UpdateUserAsync(

@@ -13,7 +13,9 @@
 #include "nlohmann_json_types/error_boundary_request_args_json.hpp"
 #else
 
-
+#include "unreal_data_types/data_adapter_result_json.hpp"
+#include "unreal_data_types/initialize_request_args_json.hpp"
+#include "unreal_data_types/initialize_response_json.hpp"
 #include "default_json_types/data_adapter_result_json.hpp"
 #include "default_json_types/statsig_user_json.hpp"
 #include "default_json_types/initialize_request_args_json.hpp"

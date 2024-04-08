@@ -20,7 +20,7 @@ class StatsigContext {
 
  public:
   explicit StatsigContext(
-      std::string sdk_key,
+      const std::string &sdk_key,
       const std::optional<StatsigUser> &user,
       const std::optional<StatsigOptions> &options
   ) : sdk_key(std::move(sdk_key)),

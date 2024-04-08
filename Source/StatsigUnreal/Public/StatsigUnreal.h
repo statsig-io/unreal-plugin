@@ -12,4 +12,8 @@ public:
 	virtual void ShutdownModule() override;
 };
 
+void Foo()
+{
 
+	auto a = 1;
+}

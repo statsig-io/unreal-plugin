@@ -7,10 +7,10 @@
 
 namespace statsig::data_types::initialize_request_args {
 
-std::string Serialize(const internal::InitializeRequestArgs &args) {
+std::string Serialize(const internal::InitializeRequestArgs &Args) {
   auto j = nlohmann::json{
-      {"hash", args.hash},
-      {"user", statsig_user::ToJson(args.user)},
+      {"hash", Args.hash},
+      {"user", statsig_user::ToJson(Args.user)},
   };
 
   return j.dump();
