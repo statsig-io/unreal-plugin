@@ -31,21 +31,27 @@ public class StatsigUnreal : ModuleRules
 		
 		PrivateIncludePaths.AddRange(
 			new string[] {
-				"StatsigUnreal/Private",
-				"StatsigUnreal/Private/unreal_data_types",
-				"StatsigUnreal/Private/sdk",
-				"StatsigUnreal/Private/sdk/include",
-				"StatsigUnreal/Private/sdk/src"
+				"StatsigUnreal/Private/statsig_compatibility/json",
+				"StatsigUnreal/Private/statsig-cpp-client-sdk/include",
+				"StatsigUnreal/Private/statsig_compatibility",
+				"StatsigUnreal/Private/statsig-cpp-client-sdk/src",
+				// "StatsigUnreal/Private/unreal_data_types",
+				// "StatsigUnreal/Private/sdk",
+				// "StatsigUnreal/Private/sdk/include",
+				// "StatsigUnreal/Private/sdk/src"
 			}
 		);
 
 		PublicIncludePaths.AddRange(
 			new string[] {
-				Path.Combine(ModuleDirectory, "Private"),
-				Path.Combine(ModuleDirectory, "Private/sdk"),
-				Path.Combine(ModuleDirectory, "Private/unreal_data_types"),
-				Path.Combine(ModuleDirectory, "Private/sdk/include"),
-				Path.Combine(ModuleDirectory, "Private/sdk/src"),
+				Path.Combine(ModuleDirectory, "Private/statsig_compatibility/json"),
+				Path.Combine(ModuleDirectory, "Private/statsig-cpp-client-sdk/include"),
+				Path.Combine(ModuleDirectory, "Private/statsig_compatibility"),
+				Path.Combine(ModuleDirectory, "Private/statsig-cpp-client-sdk/src"),
+				// Path.Combine(ModuleDirectory, "Private/sdk"),
+				// Path.Combine(ModuleDirectory, "Private/unreal_data_types"),
+				// Path.Combine(ModuleDirectory, "Private/sdk/include"),
+				// Path.Combine(ModuleDirectory, "Private/sdk/src"),
 			}
 		);
 

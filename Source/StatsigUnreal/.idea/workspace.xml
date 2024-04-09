@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
@@ -7,19 +10,95 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c81cc1d5-f128-458a-8098-5f95738bf587" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Private/Foo.cpp" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitmodules" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Private/Statsig.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/Statsig.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Private/StatsigUnrealPlugin.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/default_json_types/data_adapter_result_json.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/sdk/src/data_types/default_json_types/data_adapter_result_json.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/default_json_types/initialize_request_args_json.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/sdk/src/data_types/default_json_types/initialize_request_args_json.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/json_parser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/sdk/src/data_types/json_parser.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/nlohmann_json_types/initialize_request_args_json.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/sdk/src/data_types/nlohmann_json_types/initialize_request_args_json.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Private/sdk/src/error_boundary.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/sdk/src/error_boundary.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Private/sdk/src/network_service.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/sdk/src/network_service.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Private/sdk/src/statsig_client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/sdk/src/statsig_client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Public/StatsigUnrealPlugin.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/StatsigUnreal.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/StatsigUnreal.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/cmake/httplib.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/cmake/json.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/include/statsig/evaluation_details.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/include/statsig/evaluations_data_adapter.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/include/statsig/statsig.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/include/statsig/statsig_client.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/include/statsig/statsig_event.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/include/statsig/statsig_options.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/include/statsig/statsig_types.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/include/statsig/statsig_user.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/include/statsig/value_map.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/constants.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/default_json_types/data_adapter_result_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/default_json_types/error_boundary_request_args_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/default_json_types/initialize_request_args_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/default_json_types/initialize_response_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/default_json_types/statsig_event_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/default_json_types/statsig_user_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/json_parser.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/nlohmann_json_types/data_adapter_result_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/nlohmann_json_types/error_boundary_request_args_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/nlohmann_json_types/initialize_request_args_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/nlohmann_json_types/initialize_response_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/nlohmann_json_types/statsig_event_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/data_types/nlohmann_json_types/statsig_user_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/detailed_evaluation.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/error_boundary.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/evaluation_details_internal.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/evaluation_store.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/event_logger.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/file.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/hashing.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/initialize_request_args.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/initialize_response.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/macros.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/network_compat.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/network_service.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/stable_id.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/statsig_client.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/statsig_context.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/statsig_evaluations_data_adapter.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/statsig_event_internal.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/statsig_internal.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/statsig_types.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/statsig_user_internal.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/time.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/unordered_map_util.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/uuid.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/sdk/src/value_map.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/example/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/example/cmake/statsig.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/example/example.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig/statsig_client.h" beforeDir="false" afterPath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig/statsig_client.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig/statsig_types.h" beforeDir="false" afterPath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig/statsig_types.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig_compatibility/json/data_adapter_result_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig_compatibility/json/error_boundary_request_args_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig_compatibility/json/initialize_request_args_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig_compatibility/json/initialize_response_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig_compatibility/json/json_value.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig_compatibility/json/statsig_event_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig_compatibility/json/statsig_user_json.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/include/statsig_compatibility/network/network_client.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/hashing.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/hashing.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/json_parser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/json_parser.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/network_service.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/network_service.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/statsig_client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/statsig_client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/statsig_context.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/statsig_context.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/statsig_evaluations_data_adapter.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/statsig_evaluations_data_adapter.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/statsig_types.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/src/statsig_types.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/tests/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/tests/cmake/googletest.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/tests/test_statsig_client_threaded.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/tests/test_statsig_event.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/tests/test_statsig_types.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/statsig-cpp-client-sdk/tests/test_value_map.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Private/unreal_data_types/initialize_request_args_json.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Private/unreal_data_types/initialize_request_args_json.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Public/Statsig.h" beforeDir="false" afterPath="$PROJECT_DIR$/Public/Statsig.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Public/StatsigUnreal.h" beforeDir="false" afterPath="$PROJECT_DIR$/Public/StatsigUnreal.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StatsigUnreal.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/StatsigUnreal.Build.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ThirdParty/statsig-cpp-client-sdk" beforeDir="false" afterPath="$PROJECT_DIR$/../../ThirdParty/statsig-cpp-client-sdk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ThirdParty/nlohmann-json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ThirdParty/statsig-cpp-client-sdk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ThirdParty/yhirose-httplib" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,9 +111,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2ehahyClb3OfmJNqhR66rcyLaMS" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -46,9 +128,15 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.advertisement.text.has.clang-format": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "add-sdk",
+    "last_opened_file_path": "/Users/danielloomb/Documents/Unreal Projects/MyProject/Plugins/private-unreal-plugin/Source/StatsigUnreal",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -62,6 +150,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712359387910</updated>
       <workItem from="1712359388984" duration="21000" />
+      <workItem from="1712689564143" duration="5996000" />
     </task>
     <servers />
   </component>
