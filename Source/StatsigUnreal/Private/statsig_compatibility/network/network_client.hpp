@@ -47,11 +47,6 @@ class NetworkClient {
               }
 
               const auto Status = Res->GetResponseCode();
-              if (Status < 200 || Status >= 300) {
-                // Error
-                return;
-              }
-
               const auto Text = Res.Get()->GetContentAsString();
               callback(HttpResponse{TCHAR_TO_UTF8(*Text), Status});
             });
