@@ -19,6 +19,9 @@ public:
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Statsig Settings")
   FString SDKKey = "client-rfLvYGag3eyU0jYW5zcIJTQip7GXxSrhOFN69IGMjvq";
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Statsig Settings")
+  FString UserID = "user-a";
   
 protected:
   virtual void BeginPlay() override;

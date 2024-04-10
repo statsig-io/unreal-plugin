@@ -54,8 +54,7 @@ void UStatsigTestActorComponent::BeginPlay() {
   Super::BeginPlay();
 
   StatsigUser user;
-  user.user_id = "user-e";
-  user.custom_ids["employeeID"] = "employee-e";
+  user.user_id = FROM_FSTRING(UserID);
 
   std::string sdk_key = FROM_FSTRING(SDKKey);
 

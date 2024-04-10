@@ -5,7 +5,4 @@ namespace statsig_compatibility::constants {
 	// Statsig Metadata
 	const char *kSdkType = "cpp-client";
 	
-	// Caching
-	const char *kCacheDirectory = FPaths::ProjectPersistentDownloadDir();
-	
 }
