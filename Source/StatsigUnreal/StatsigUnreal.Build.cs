@@ -8,7 +8,7 @@ public class StatsigUnreal : ModuleRules
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
-
+		PublicDefinitions.Add("STATSIG_DISABLE_EXCEPTIONS=1");
 		
 		PublicDependencyModuleNames.AddRange(
 			new string[]
