@@ -15,9 +15,10 @@ inline std::string JsonObjectToString(const TSharedPtr<FJsonObject>& json) {
   return FROM_FSTRING(json_str);
 }
 
-inline TSharedPtr<FJsonObject> StringToJsonObject(const std::string &input) {
+inline TSharedPtr<FJsonObject> StringToJsonObject(const std::string& input) {
   TSharedPtr<FJsonObject> json;
-  const TSharedRef<TJsonReader<>> reader = TJsonReaderFactory<>::Create(TO_FSTRING(input));
+  const TSharedRef<TJsonReader<>> reader = TJsonReaderFactory<>::Create(
+      TO_FSTRING(input));
 
   if (!FJsonSerializer::Deserialize(reader, json) || !json.IsValid()) {
     return nullptr;
@@ -35,6 +36,17 @@ inline std::optional<std::string> TryGetString(
   }
 
   return std::nullopt;
+}
+
+inline TSharedPtr<FJsonObject> UnorderedStringMapJsonObject(
+    const std::unordered_map<std::string, std::string>& map) {
+  TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
+
+  for (const auto& [fst, snd] : map) {
+    json->SetStringField(TO_FSTRING(fst), TO_FSTRING(snd));
+  }
+
+  return json;
 }
 
 inline std::unordered_map<std::string, std::string> JsonObjectToUnorderedMap(

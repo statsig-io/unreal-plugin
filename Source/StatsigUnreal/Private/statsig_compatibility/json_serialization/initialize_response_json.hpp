@@ -46,7 +46,8 @@ inline TSharedPtr<FJsonObject> ToJson(const data::ConfigEvaluation& e) {
 
   json->SetStringField(TEXT("name"), TO_FSTRING(e.name));
   json->SetStringField(TEXT("rule_id"), TO_FSTRING(e.rule_id));
-  // json->SetObjectField(TEXT("value"), e.value);
+
+  json->SetObjectField(TEXT("value"), e.value);
 
   json->SetStringField(TEXT("id_type"), TO_FSTRING(e.id_type));
 
@@ -61,7 +62,8 @@ inline data::ConfigEvaluation FromJson(TSharedPtr<FJsonObject> json) {
 
   e.name = FROM_FSTRING(json->GetStringField("name"));
   e.rule_id = FROM_FSTRING(json->GetStringField("rule_id"));
-  e.value = JsonValue(json->GetObjectField("value"));
+
+  e.value = json->GetObjectField("value");
   e.secondary_exposures = secondary_exposures::FromJson(
       json, "secondary_exposures");
   return e;
@@ -77,7 +79,7 @@ inline TSharedPtr<FJsonObject> ToJson(const data::LayerEvaluation& e) {
 
   json->SetStringField(TEXT("name"), TO_FSTRING(e.name));
   json->SetStringField(TEXT("rule_id"), TO_FSTRING(e.rule_id));
-  // json->SetObjectField(TEXT("value"), e.value);
+  json->SetObjectField(TEXT("value"), e.value);
 
   json->SetStringField(TEXT("id_type"), TO_FSTRING(e.id_type));
 
@@ -116,7 +118,7 @@ inline data::LayerEvaluation FromJson(TSharedPtr<FJsonObject> json) {
     e.explicit_parameters.push_back(FROM_FSTRING(param->AsString()));
   }
 
-  e.value = JsonValue(json->GetObjectField("value"));
+  e.value = json->GetObjectField("value");
   e.secondary_exposures = secondary_exposures::FromJson(
       json, "secondary_exposures");
   e.undelegated_secondary_exposures = secondary_exposures::FromJson(

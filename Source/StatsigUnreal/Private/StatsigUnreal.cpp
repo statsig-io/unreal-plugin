@@ -1,5 +1,5 @@
 #include "StatsigUnreal.h"
-#include "Statsig.h"
+#include "FStatsig.h"
 
 #include <iostream>
 
