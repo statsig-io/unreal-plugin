@@ -1,36 +1,24 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 using UnrealBuildTool;
+using System.IO;
+using System.Linq;
 
 public class StatsigUnreal : ModuleRules
 {
 	public StatsigUnreal(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		
-		PublicIncludePaths.AddRange(
-			new string[] {
-				// ... add public include paths required here ...
-			}
-			);
-				
-		
-		PrivateIncludePaths.AddRange(
-			new string[] {
-				// ... add other private include paths required here ...
-			}
-			);
-			
+
+
 		
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
 				"Core",
-				// ... add other public dependencies that you statically link with here ...
+				"HTTP",
+				"Json"
 			}
-			);
-			
-		
+		);
+
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
@@ -40,14 +28,26 @@ public class StatsigUnreal : ModuleRules
 				"SlateCore",
 				// ... add private dependencies that you statically link with here ...	
 			}
-			);
-		
-		
-		DynamicallyLoadedModuleNames.AddRange(
+		);
+
+		PrivateIncludePaths.AddRange(
 			new string[]
 			{
-				// ... add any modules that your module loads dynamically here ...
+				"StatsigUnreal/Private/statsig_compatibility/json",
+				"StatsigUnreal/Private/statsig-cpp-client-sdk/include",
+				"StatsigUnreal/Private/statsig_compatibility",
+				"StatsigUnreal/Private/statsig-cpp-client-sdk/src",
 			}
-			);
+		);
+
+		PublicIncludePaths.AddRange(
+			new string[]
+			{
+				Path.Combine(ModuleDirectory, "Private/statsig_compatibility/json"),
+				Path.Combine(ModuleDirectory, "Private/statsig-cpp-client-sdk/include"),
+				Path.Combine(ModuleDirectory, "Private/statsig_compatibility"),
+				Path.Combine(ModuleDirectory, "Private/statsig-cpp-client-sdk/src"),
+			}
+		);
 	}
 }
