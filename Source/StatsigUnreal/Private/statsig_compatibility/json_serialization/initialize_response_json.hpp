@@ -8,23 +8,6 @@ namespace statsig::data_types {
 
 namespace gate_evaluation {
 
-inline TSharedPtr<FJsonObject> ToJson(const data::GateEvaluation& e) {
-  TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
-
-  json->SetStringField(TEXT("name"), TO_FSTRING(e.name));
-  json->SetStringField(TEXT("rule_id"), TO_FSTRING(e.rule_id));
-  json->SetBoolField(TEXT("value"), e.value);
-
-  if (e.id_type.has_value()) {
-    json->SetStringField(TEXT("id_type"), TO_FSTRING(e.id_type.value()));
-  }
-
-  auto sec_expo_json_array = secondary_exposures::ToJson(e.secondary_exposures);
-  json->SetArrayField(TEXT("secondary_exposures"), sec_expo_json_array);
-
-  return json;
-}
-
 inline data::GateEvaluation FromJson(TSharedPtr<FJsonObject> json) {
   data::GateEvaluation e;
 
@@ -40,22 +23,6 @@ inline data::GateEvaluation FromJson(TSharedPtr<FJsonObject> json) {
 }
 
 namespace config_evaluation {
-
-inline TSharedPtr<FJsonObject> ToJson(const data::ConfigEvaluation& e) {
-  TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
-
-  json->SetStringField(TEXT("name"), TO_FSTRING(e.name));
-  json->SetStringField(TEXT("rule_id"), TO_FSTRING(e.rule_id));
-
-  json->SetObjectField(TEXT("value"), e.value);
-
-  json->SetStringField(TEXT("id_type"), TO_FSTRING(e.id_type));
-
-  auto sec_expo_json_array = secondary_exposures::ToJson(e.secondary_exposures);
-  json->SetArrayField(TEXT("secondary_exposures"), sec_expo_json_array);
-
-  return json;
-}
 
 inline data::ConfigEvaluation FromJson(TSharedPtr<FJsonObject> json) {
   data::ConfigEvaluation e;
@@ -73,40 +40,6 @@ inline data::ConfigEvaluation FromJson(TSharedPtr<FJsonObject> json) {
 
 
 namespace layer_evaluation {
-
-inline TSharedPtr<FJsonObject> ToJson(const data::LayerEvaluation& e) {
-  TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
-
-  json->SetStringField(TEXT("name"), TO_FSTRING(e.name));
-  json->SetStringField(TEXT("rule_id"), TO_FSTRING(e.rule_id));
-  json->SetObjectField(TEXT("value"), e.value);
-
-  json->SetStringField(TEXT("id_type"), TO_FSTRING(e.id_type));
-
-  auto sec_expo_json_array = secondary_exposures::ToJson(e.secondary_exposures);
-  json->SetArrayField(TEXT("secondary_exposures"), sec_expo_json_array);
-
-  auto undel_sec_expo_json_array = secondary_exposures::ToJson(
-      e.undelegated_secondary_exposures);
-  json->SetArrayField(
-      TEXT("undelegated_secondary_exposures"), undel_sec_expo_json_array);
-
-  TArray<TSharedPtr<FJsonValue>> explicit_parameters_json_array;
-  for (const auto& param : e.explicit_parameters) {
-    sec_expo_json_array.Add(
-        MakeShared<FJsonValueString>(TO_FSTRING(param)));
-  }
-  json->SetArrayField(
-      TEXT("explicit_parameters"), explicit_parameters_json_array);
-
-  if (e.allocated_experiment_name.has_value()) {
-    json->SetStringField(
-        TEXT("allocated_experiment_name"),
-        TO_FSTRING(e.allocated_experiment_name.value()));
-  }
-
-  return json;
-}
 
 inline data::LayerEvaluation FromJson(TSharedPtr<FJsonObject> json) {
   data::LayerEvaluation e;
@@ -133,35 +66,6 @@ inline data::LayerEvaluation FromJson(TSharedPtr<FJsonObject> json) {
 
 namespace initialize_response {
 
-inline TSharedPtr<FJsonObject> ToJson(const data::InitializeResponse& res) {
-  TSharedPtr<FJsonObject> res_json = MakeShareable(new FJsonObject());
-
-  auto jsonify = [&](const FString& field, const auto& source, auto func) {
-    TSharedPtr<FJsonObject> json_obj = MakeShareable(new FJsonObject());
-    for (const auto& entry : source) {
-      json_obj->SetObjectField(
-          TO_FSTRING(entry.first), func(entry.second));
-    }
-    res_json->SetObjectField(field, json_obj);
-  };
-
-  jsonify(TEXT("feature_gates"), res.feature_gates,
-          gate_evaluation::ToJson);
-  jsonify(TEXT("dynamic_configs"), res.dynamic_configs,
-          config_evaluation::ToJson);
-  jsonify(TEXT("layer_configs"), res.layer_configs,
-          layer_evaluation::ToJson);
-
-  res_json->SetNumberField(TEXT("time"), res.time);
-
-  if (res.generator.has_value()) {
-    res_json->SetStringField(
-        TEXT("generator"), TO_FSTRING(res.generator.value()));
-  }
-
-  return res_json;
-}
-
 inline data::InitializeResponse FromJson(const TSharedPtr<FJsonObject>& json) {
   data::InitializeResponse response = {};
 
@@ -184,20 +88,16 @@ inline data::InitializeResponse FromJson(const TSharedPtr<FJsonObject>& json) {
   parse(TEXT("layer_configs"), response.layer_configs,
         layer_evaluation::FromJson);
 
-  if (json->HasField(TEXT("time"))) {
-    response.time = json->GetNumberField(TEXT("time"));
-  }
-
-  if (json->HasField(TEXT("generator"))) {
-    response.generator = FROM_FSTRING(json->GetStringField(TEXT("generator")));
-  }
+  response.time = json->GetNumberField(TEXT("time"));
+  response.has_updates = json->GetBoolField(TEXT("has_updates"));
 
   return response;
 }
 
-inline std::string Serialize(const data::InitializeResponse& response) {
-  return unreal_json_utils::JsonObjectToString(ToJson(response));
-}
+// Do not serialize init res, just use the raw network response string
+// inline std::string Serialize(const data::InitializeResponse& response) {
+//   return unreal_json_utils::JsonObjectToString(ToJson(response));
+// }
 
 inline data::InitializeResponse Deserialize(const std::string& input) {
   const auto json = unreal_json_utils::StringToJsonObject(input);

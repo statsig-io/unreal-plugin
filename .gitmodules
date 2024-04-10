@@ -1,6 +1,4 @@
 [submodule "Source/StatsigUnreal/Private/statsig-cpp-client-sdk"]
 	path = Source/StatsigUnreal/Private/statsig-cpp-client-sdk
 	url = https://github.com/statsig-io/cpp-client-sdk.git
-[submodule "Source/StatsigUnreal/External/statsig-cpp-client-sdk"]
-	path = Source/StatsigUnreal/External/statsig-cpp-client-sdk
-	url = https://github.com/statsig-io/cpp-client-sdk.git
+

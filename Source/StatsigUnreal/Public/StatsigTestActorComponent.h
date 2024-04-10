@@ -12,15 +12,18 @@ class UStatsigTestActorComponent : public UActorComponent {
 
 public:
 
-  // Sets default values for this component's properties
   UStatsigTestActorComponent();
 
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Statsig Settings")
+  bool bInitializeAsync = true;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Statsig Settings")
+  FString SDKKey = "client-rfLvYGag3eyU0jYW5zcIJTQip7GXxSrhOFN69IGMjvq";
+  
 protected:
-  // Called when the game starts
   virtual void BeginPlay() override;
 
 public:
-  // Called every frame
   virtual void TickComponent(float DeltaTime, ELevelTick TickType,
                              FActorComponentTickFunction*
                              ThisTickFunction) override;
