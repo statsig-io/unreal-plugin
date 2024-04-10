@@ -4,7 +4,6 @@
 #include "HttpModule.h"
 #include "Interfaces/IHttpRequest.h"
 #include "Interfaces/IHttpResponse.h"
-#include "async/promise.hpp"
 
 namespace statsig::internal {
 
