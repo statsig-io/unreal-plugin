@@ -14,10 +14,10 @@ inline std::string Serialize(const DataAdapterResult& result) {
   return unreal_json_utils::JsonObjectToString(json);
 }
 
-inline DataAdapterResult Deserialize(const std::string& input) {
+inline std::optional<DataAdapterResult> Deserialize(const std::string& input) {
   TSharedPtr<FJsonObject> json = unreal_json_utils::StringToJsonObject(input);
   if (json == nullptr) {
-    return {};
+    return std::nullopt;
   }
 
   DataAdapterResult result;

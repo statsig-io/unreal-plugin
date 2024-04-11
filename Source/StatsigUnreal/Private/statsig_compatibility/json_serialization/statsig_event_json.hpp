@@ -2,6 +2,7 @@
 
 #include "statsig_event_internal.hpp"
 #include "secondary_exposures_json.hpp"
+#include "statsig_user_json.hpp"
 
 namespace statsig::data_types::statsig_event {
 
@@ -14,7 +15,8 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal& event) {
   json->SetObjectField(TEXT("user"), statsig_user::ToJson(event.user));
 
   if (event.metadata.has_value()) {
-    const TSharedPtr<FJsonObject> metadata_json = MakeShareable(new FJsonObject);
+    const TSharedPtr<FJsonObject> metadata_json =
+        MakeShareable(new FJsonObject);
     for (const auto& [fst, snd] : event.metadata.value()) {
       metadata_json->SetStringField(TO_FSTRING(fst), TO_FSTRING(snd));
     }
@@ -29,7 +31,7 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal& event) {
 
   if (event.string_value.has_value()) {
     json->SetStringField(
-        TEXT("value"), FString(event.string_value.value().c_str()));
+        TEXT("value"), TO_FSTRING(event.string_value.value()));
   } else if (event.double_value.has_value()) {
     json->SetNumberField(TEXT("value"), event.double_value.value());
   }
@@ -37,13 +39,50 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal& event) {
   return json;
 }
 
+inline StatsigEventInternal FromJson(const TSharedPtr<FJsonObject>& json) {
+  StatsigEventInternal event;
+
+  event.event_name = FROM_FSTRING(json->GetStringField("eventName"));
+  event.time = json->GetNumberField("time");
+
+  FString str_value;
+  double num_value;
+  if (json->TryGetStringField("value", str_value)) {
+    event.string_value = FROM_FSTRING(str_value);
+  } else if (json->TryGetNumberField("value", num_value)) {
+    event.double_value = num_value;
+  }
+
+  if (json->HasField("user")) {
+    event.user = statsig_user::FromJson(json->GetObjectField("user")).value_or(
+        event.user);
+  }
+
+  if (json->HasField("metadata")) {
+    event.metadata = unreal_json_utils::JsonObjectToUnorderedStringMap(
+        json->GetObjectField("metadata"));
+  }
+
+  if (json->HasField("secondaryExposures")) {
+    event.secondary_exposures = secondary_exposures::FromJson(
+        json, "secondaryExposures");
+  }
+
+  return event;
+}
+
 inline std::string Serialize(const StatsigEventInternal& event) {
   return unreal_json_utils::JsonObjectToString(ToJson(event));
 }
 
-inline StatsigEventInternal Deserialize(const std::string& input) {
-  StatsigEventInternal res;
-  return res;
+inline std::optional<StatsigEventInternal>
+Deserialize(const std::string& input) {
+  const auto json = unreal_json_utils::StringToJsonObject(input);
+  if (json == nullptr || !json.IsValid()) {
+    return std::nullopt;
+  }
+
+  return FromJson(json);
 }
 
 

@@ -3,6 +3,6 @@
 namespace statsig_compatibility::constants {
 
 	// Statsig Metadata
-	const char *kSdkType = "cpp-client";
+	const char *kSdkType = "unreal-cpp-client";
 	
 }

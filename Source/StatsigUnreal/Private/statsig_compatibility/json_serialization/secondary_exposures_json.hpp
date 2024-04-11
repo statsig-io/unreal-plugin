@@ -28,7 +28,6 @@ inline std::vector<data::SecondaryExposure> FromJson(
   std::vector<data::SecondaryExposure> exposures;
 
   const TArray<TSharedPtr<FJsonValue>>* arr;
-  auto f = json->GetArrayField(field);
   if (!json->TryGetArrayField(field, arr)) {
     return exposures;
   }
@@ -36,7 +35,7 @@ inline std::vector<data::SecondaryExposure> FromJson(
   for (const TSharedPtr<FJsonValue>& value : *arr) {
     if (value.IsValid() && value->Type == EJson::Object) {
       TSharedPtr<FJsonObject> object = value->AsObject();
-      exposures.push_back(unreal_json_utils::JsonObjectToUnorderedMap(object));
+      exposures.push_back(unreal_json_utils::JsonObjectToUnorderedStringMap(object));
     }
   }
 

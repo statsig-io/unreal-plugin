@@ -7,10 +7,10 @@ namespace statsig::data_types::log_event_response {
 
 using LogEventResponse = internal::LogEventResponse;
 
-inline LogEventResponse Deserialize(const std::string& input) {
+inline std::optional<LogEventResponse> Deserialize(const std::string& input) {
   TSharedPtr<FJsonObject> json = unreal_json_utils::StringToJsonObject(input);
   if (json == nullptr) {
-    return {};
+    return std::nullopt;
   }
 
   internal::LogEventResponse response;

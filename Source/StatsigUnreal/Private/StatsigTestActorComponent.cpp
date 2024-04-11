@@ -21,7 +21,7 @@ void QueryStatsig() {
   } else {
     Log("a_gate: Fail", FColor::Red);
   }
-
+  
   auto experiment = client.GetExperiment("an_experiment");
   auto values = experiment.GetValues();
   auto value = values->GetStringField("a_string");
@@ -29,7 +29,7 @@ void QueryStatsig() {
           TEXT("an_experiment.a_string: {0} ({1})"), {
               value, TO_FSTRING(experiment.GetEvaluationDetails().reason)}),
       FColor::Blue);
-
+  
   auto not_an_experiment = client.GetExperiment("not_an_experiment");
   auto not_a_value = not_an_experiment.GetValues()->GetStringField("not_real");
   Log(FString::Format(
@@ -37,15 +37,17 @@ void QueryStatsig() {
               not_a_value,
               TO_FSTRING(not_an_experiment.GetEvaluationDetails().reason)}),
       FColor::Blue);
-
+  
   auto layer = client.GetLayer("a_layer");
   auto param = layer.GetValue("a_string");
-
+  
   Log(FString::Format(
           TEXT("a_layer.a_string: {0} ({1})"),
           {param.has_value() ? param.value()->AsString() : TEXT(""),
            TO_FSTRING(layer.GetEvaluationDetails().reason)}),
       FColor::Blue);
+
+  client.LogEvent({"my_custom_event", "some_value_😎"});
 
   client.Flush();
 }

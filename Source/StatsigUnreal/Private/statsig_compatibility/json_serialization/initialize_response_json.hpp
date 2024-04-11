@@ -99,10 +99,10 @@ inline data::InitializeResponse FromJson(const TSharedPtr<FJsonObject>& json) {
 //   return unreal_json_utils::JsonObjectToString(ToJson(response));
 // }
 
-inline data::InitializeResponse Deserialize(const std::string& input) {
+inline std::optional<data::InitializeResponse> Deserialize(const std::string& input) {
   const auto json = unreal_json_utils::StringToJsonObject(input);
   if (json == nullptr) {
-    return {};
+    return std::nullopt;
   }
 
   return FromJson(json);

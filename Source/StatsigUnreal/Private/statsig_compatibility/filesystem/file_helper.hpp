@@ -7,49 +7,48 @@ class FileHelper {
 public:
   static std::string GetCacheDir() {
     const auto dir = GetCacheDirFString();
-    return TCHAR_TO_UTF8(*dir);
+    return FROM_FSTRING(dir);
   }
 
   static void WriteStringToFile(
       const std::string& content,
       const std::string& path
       ) {
-    FFileHelper::SaveStringToFile(FString(content.c_str()),
-                                  *FString(path.c_str()));
+    FFileHelper::SaveStringToFile(TO_FSTRING(content), *TO_FSTRING(path));
   }
 
   static std::string CombinePath(const std::string& left,
                                  const std::string& right) {
-    auto path = FPaths::Combine(*FString(left.c_str()),
-                                *FString(right.c_str()));
+    auto path = FPaths::Combine(*TO_FSTRING(left), *TO_FSTRING(right));
     return TCHAR_TO_UTF8(*path);
   }
 
   static std::optional<std::string> ReadStringToFile(const std::string& path) {
     FString result;
-    if (FFileHelper::LoadFileToString(result, *FString(path.c_str()))) {
-      return TCHAR_TO_UTF8(*result);
+    if (FFileHelper::LoadFileToString(result, *TO_FSTRING(path))) {
+      return FROM_FSTRING(result);
     }
     return std::nullopt;
   }
 
   static void EnsureCacheDirectoryExists() {
     IPlatformFile& manager = FPlatformFileManager::Get().GetPlatformFile();
-    auto dir = FString(GetCacheDir().c_str());
+    auto dir = TO_FSTRING(GetCacheDir());
     if (!manager.DirectoryExists(*dir)) {
       manager.CreateDirectory(*dir);
     }
   }
 
-  static void DeleteFile(std::string path) {
+  static void DeleteFile(const std::string& path) {
     IPlatformFile& manager = FPlatformFileManager::Get().GetPlatformFile();
-    manager.DeleteFile(*FString(path.c_str()));
+    manager.DeleteFile(*TO_FSTRING(path));
   }
 
-  static std::vector<std::string> GetCachePathsSortedYoungestFirst(std::string prefix) {
+  static std::vector<std::string> GetCachePathsSortedYoungestFirst(
+      std::string prefix) {
     TArray<FString> paths;
     IPlatformFile& manager = FPlatformFileManager::Get().GetPlatformFile();
-    FString f_prefix = FString(prefix.c_str());
+    FString f_prefix = TO_FSTRING(prefix);
 
     manager.IterateDirectory(
         *GetCacheDirFString(),
@@ -74,7 +73,7 @@ public:
 
     std::vector<std::string> result;
     for (const FString& path : paths) {
-      result.push_back(TCHAR_TO_UTF8(*path));
+      result.push_back(FROM_FSTRING(path));
     }
     return result;
   }

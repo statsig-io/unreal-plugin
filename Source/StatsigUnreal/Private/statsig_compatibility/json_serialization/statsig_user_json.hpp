@@ -7,10 +7,12 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigUser& user) {
   TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
   json->SetStringField(TEXT("userID"), TO_FSTRING(user.user_id));
 
-  json->SetObjectField(
-      TEXT("customIDs"),
-      unreal_json_utils::UnorderedStringMapJsonObject(
-          user.custom_ids));
+  if (user.custom_ids.size() > 0) {
+    json->SetObjectField(
+        TEXT("customIDs"),
+        unreal_json_utils::UnorderedStringMapToJsonObject(
+            user.custom_ids));
+  }
 
   auto add_string = [&](
       const FString& field,
@@ -31,26 +33,21 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigUser& user) {
   if (user.custom.has_value()) {
     json->SetObjectField(
         TEXT("custom"),
-        unreal_json_utils::UnorderedStringMapJsonObject(user.custom.value()));
+        unreal_json_utils::UnorderedStringMapToJsonObject(user.custom.value()));
   }
 
   if (user.private_attributes.has_value()) {
     json->SetObjectField(
         TEXT("privateAttributes"),
-        unreal_json_utils::UnorderedStringMapJsonObject(
+        unreal_json_utils::UnorderedStringMapToJsonObject(
             user.private_attributes.value()));
   }
 
   return json;
 }
 
-inline std::string Serialize(const StatsigUser& user) {
-  return unreal_json_utils::JsonObjectToString(ToJson(user));
-}
-
-inline StatsigUser Deserialize(const std::string& input) {
-  TSharedPtr<FJsonObject> json = unreal_json_utils::StringToJsonObject(input);
-
+inline std::optional<StatsigUser>
+FromJson(const TSharedPtr<FJsonObject>& json) {
   auto add_string = [&](const char* field, std::optional<std::string>& target) {
     if (json->HasField(field)) {
       target = FROM_FSTRING(json->GetStringField(field));
@@ -71,18 +68,34 @@ inline StatsigUser Deserialize(const std::string& input) {
   add_string("appVersion", user.app_version);
 
   if (json->HasField("custom")) {
-    user.custom = unreal_json_utils::JsonObjectToUnorderedMap(json->GetObjectField("custom"));
+    user.custom = unreal_json_utils::JsonObjectToUnorderedStringMap(
+        json->GetObjectField("custom"));
   }
 
   if (json->HasField("privateAttributes")) {
-    user.private_attributes = unreal_json_utils::JsonObjectToUnorderedMap(json->GetObjectField("privateAttributes"));
+    user.private_attributes = unreal_json_utils::JsonObjectToUnorderedStringMap(
+        json->GetObjectField("privateAttributes"));
   }
 
   if (json->HasField("customIDs")) {
-    user.custom_ids = unreal_json_utils::JsonObjectToUnorderedMap(json->GetObjectField("customIDs"));
+    user.custom_ids = unreal_json_utils::JsonObjectToUnorderedStringMap(
+        json->GetObjectField("customIDs"));
   }
 
   return user;
+}
+
+inline std::string Serialize(const StatsigUser& user) {
+  return unreal_json_utils::JsonObjectToString(ToJson(user));
+}
+
+inline std::optional<StatsigUser> Deserialize(const std::string& input) {
+  TSharedPtr<FJsonObject> json = unreal_json_utils::StringToJsonObject(input);
+  if (json == nullptr) {
+    return std::nullopt;
+  }
+
+  return FromJson(json);
 }
 
 }

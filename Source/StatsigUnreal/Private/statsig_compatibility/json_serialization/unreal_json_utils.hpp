@@ -1,6 +1,6 @@
 #pragma once
 
-#define TO_FSTRING(input) FString(input.c_str())
+#define TO_FSTRING(input) FString(UTF8_TO_TCHAR(input.c_str()))
 #define FROM_FSTRING(input) TCHAR_TO_UTF8(*input)
 
 namespace statsig::data_types::unreal_json_utils {
@@ -9,7 +9,18 @@ inline std::string JsonObjectToString(const TSharedPtr<FJsonObject>& json) {
   FString json_str;
   FJsonSerializer::Serialize(
       json.ToSharedRef(),
-      TJsonWriterFactory<>::Create(&json_str)
+      TJsonWriterFactory<TCHAR, TCondensedJsonPrintPolicy<TCHAR>>::Create(&json_str)
+      );
+
+  return FROM_FSTRING(json_str);
+}
+
+inline std::string
+JsonArrayToString(const TArray<TSharedPtr<FJsonValue>>& json) {
+  FString json_str;
+  FJsonSerializer::Serialize(
+      json,
+      TJsonWriterFactory<TCHAR, TCondensedJsonPrintPolicy<TCHAR>>::Create(&json_str)
       );
 
   return FROM_FSTRING(json_str);
@@ -38,7 +49,7 @@ inline std::optional<std::string> TryGetString(
   return std::nullopt;
 }
 
-inline TSharedPtr<FJsonObject> UnorderedStringMapJsonObject(
+inline TSharedPtr<FJsonObject> UnorderedStringMapToJsonObject(
     const std::unordered_map<std::string, std::string>& map) {
   TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
 
@@ -49,7 +60,8 @@ inline TSharedPtr<FJsonObject> UnorderedStringMapJsonObject(
   return json;
 }
 
-inline std::unordered_map<std::string, std::string> JsonObjectToUnorderedMap(
+inline std::unordered_map<std::string, std::string>
+JsonObjectToUnorderedStringMap(
     const TSharedPtr<FJsonObject>& JsonObject) {
   std::unordered_map<std::string, std::string> ResultMap;
 

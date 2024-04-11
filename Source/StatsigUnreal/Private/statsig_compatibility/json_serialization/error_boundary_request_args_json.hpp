@@ -3,7 +3,7 @@
 
 namespace statsig::data_types::error_boundary_request_args {
 
-std::string Serialize(const internal::ErrorBoundaryRequestArgs &args) {
+inline std::string Serialize(const internal::ErrorBoundaryRequestArgs &args) {
   const TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
 
   json->SetStringField(TEXT("exception"), FString(args.exception.c_str()));
