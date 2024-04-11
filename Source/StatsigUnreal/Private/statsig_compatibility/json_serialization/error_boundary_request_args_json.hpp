@@ -15,13 +15,7 @@ std::string Serialize(const internal::ErrorBoundaryRequestArgs &args) {
   }
   json->SetArrayField(TEXT("info"), info_json_arr);
 
-  FString json_str;
-  FJsonSerializer::Serialize(
-      json.ToSharedRef(),
-      TJsonWriterFactory<>::Create(&json_str)
-      );
-
-  return TCHAR_TO_UTF8(*json_str);
+  return unreal_json_utils::JsonObjectToString(json);
 }
 
 }

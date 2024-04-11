@@ -11,21 +11,12 @@ inline std::string Serialize(const DataAdapterResult& result) {
   json->SetNumberField(TEXT("source"), static_cast<int>(result.source));
   json->SetNumberField(TEXT("receivedAt"), result.receivedAt);
 
-  FString json_str;
-  FJsonSerializer::Serialize(
-      json.ToSharedRef(),
-      TJsonWriterFactory<>::Create(&json_str)
-      );
-
-  return TCHAR_TO_UTF8(*json_str);
+  return unreal_json_utils::JsonObjectToString(json);
 }
 
 inline DataAdapterResult Deserialize(const std::string& input) {
-  TSharedPtr<FJsonObject> json;
-  const TSharedRef<TJsonReader<>> reader = TJsonReaderFactory<>::Create(
-      FString(input.c_str()));
-
-  if (!FJsonSerializer::Deserialize(reader, json) || !json.IsValid()) {
+  TSharedPtr<FJsonObject> json = unreal_json_utils::StringToJsonObject(input);
+  if (json == nullptr) {
     return {};
   }
 
