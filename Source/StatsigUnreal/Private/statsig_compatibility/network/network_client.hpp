@@ -33,6 +33,8 @@ class NetworkClient {
       HttpRequest->SetHeader(FString(fst.c_str()), FString(snd.c_str()));
     }
 
+    HttpRequest->SetTimeout(30);
+
     HttpRequest->OnProcessRequestComplete()
         .BindLambda(
             [callback](
@@ -41,13 +43,13 @@ class NetworkClient {
                 const bool bSuccess
             ) {
               if (!bSuccess || !Res.IsValid()) {
-                // Error
+                callback({});
                 return;
               }
 
               const auto Status = Res->GetResponseCode();
               const auto Text = Res.Get()->GetContentAsString();
-              callback(HttpResponse{TCHAR_TO_UTF8(*Text), Status});
+              callback({TCHAR_TO_UTF8(*Text), Status});
             });
 
     HttpRequest->ProcessRequest();
