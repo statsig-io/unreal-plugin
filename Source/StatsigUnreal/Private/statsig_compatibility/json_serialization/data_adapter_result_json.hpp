@@ -1,6 +1,12 @@
 #pragma once
 
+#include "Dom/JsonObject.h"
+#include "Dom/JsonValue.h"
+#include "Templates/SharedPointer.h"
+
 #include "statsig/evaluations_data_adapter.h"
+
+#include <string>
 
 namespace statsig::data_types::data_adapter_result {
 

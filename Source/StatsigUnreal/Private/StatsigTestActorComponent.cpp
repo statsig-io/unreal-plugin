@@ -1,5 +1,7 @@
 #include "StatsigTestActorComponent.h"
 
+#include "Engine/Engine.h"
+
 #include "json_serialization/unreal_json_utils.hpp"
 #include "statsig/statsig.h"
 
@@ -24,14 +26,14 @@ void QueryStatsig() {
   
   auto experiment = client.GetExperiment("an_experiment");
   auto values = experiment.GetValues();
-  auto value = values->GetStringField("a_string");
+  auto value = values->GetStringField(TEXT("a_string"));
   Log(FString::Format(
           TEXT("an_experiment.a_string: {0} ({1})"), {
               value, TO_FSTRING(experiment.GetEvaluationDetails().reason)}),
       FColor::Blue);
   
   auto not_an_experiment = client.GetExperiment("not_an_experiment");
-  auto not_a_value = not_an_experiment.GetValues()->GetStringField("not_real");
+  auto not_a_value = not_an_experiment.GetValues()->GetStringField(TEXT("not_real"));
   Log(FString::Format(
           TEXT("not_an_experiment.not_real: {0} ({1})"), {
               not_a_value,

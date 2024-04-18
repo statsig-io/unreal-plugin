@@ -1,8 +1,15 @@
 #pragma once
 
-#include "statsig_event_internal.hpp"
+#include "Containers/UnrealString.h"
+#include "Dom/JsonObject.h"
+#include "Templates/SharedPointer.h"
+
 #include "secondary_exposures_json.hpp"
+#include "statsig_event_internal.hpp"
 #include "statsig_user_json.hpp"
+
+#include <optional>
+#include <string>
 
 namespace statsig::data_types::statsig_event {
 
@@ -42,30 +49,30 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal& event) {
 inline StatsigEventInternal FromJson(const TSharedPtr<FJsonObject>& json) {
   StatsigEventInternal event;
 
-  event.event_name = FROM_FSTRING(json->GetStringField("eventName"));
-  event.time = json->GetNumberField("time");
+  event.event_name = FROM_FSTRING(json->GetStringField(TEXT("eventName")));
+  event.time = json->GetNumberField(TEXT("time"));
 
   FString str_value;
   double num_value;
-  if (json->TryGetStringField("value", str_value)) {
+  if (json->TryGetStringField(TEXT("value"), str_value)) {
     event.string_value = FROM_FSTRING(str_value);
-  } else if (json->TryGetNumberField("value", num_value)) {
+  } else if (json->TryGetNumberField(TEXT("value"), num_value)) {
     event.double_value = num_value;
   }
 
-  if (json->HasField("user")) {
-    event.user = statsig_user::FromJson(json->GetObjectField("user")).value_or(
+  if (json->HasField(TEXT("user"))) {
+    event.user = statsig_user::FromJson(json->GetObjectField(TEXT("user"))).value_or(
         event.user);
   }
 
-  if (json->HasField("metadata")) {
+  if (json->HasField(TEXT("metadata"))) {
     event.metadata = unreal_json_utils::JsonObjectToUnorderedStringMap(
-        json->GetObjectField("metadata"));
+        json->GetObjectField(TEXT("metadata")));
   }
 
-  if (json->HasField("secondaryExposures")) {
+  if (json->HasField(TEXT("secondaryExposures"))) {
     event.secondary_exposures = secondary_exposures::FromJson(
-        json, "secondaryExposures");
+        json, TEXT("secondaryExposures"));
   }
 
   return event;

@@ -1,7 +1,13 @@
 #pragma once
 
+#include "Containers/UnrealString.h"
+#include "Dom/JsonObject.h"
+#include "Dom/JsonValue.h"
+#include "Templates/SharedPointer.h"
 
 #include "initialize_request_args.h"
+
+#include <string>
 
 namespace statsig::data_types::initialize_request_args {
 

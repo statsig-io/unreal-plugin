@@ -6,9 +6,12 @@ public class StatsigUnreal : ModuleRules
 {
 	public StatsigUnreal(ReadOnlyTargetRules Target) : base(Target)
 	{
+		OptimizeCode = CodeOptimization.Never;
+
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDefinitions.Add("STATSIG_DISABLE_EXCEPTIONS=1");
+		PublicDefinitions.Add("STATSIG_DISABLE_FILESYSTEM=1");
 		
 		PublicDependencyModuleNames.AddRange(
 			new string[]
@@ -22,7 +25,9 @@ public class StatsigUnreal : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
+				"Core",
 				"CoreUObject",
+				"DeveloperSettings",
 				"Engine",
 				"Slate",
 				"SlateCore",

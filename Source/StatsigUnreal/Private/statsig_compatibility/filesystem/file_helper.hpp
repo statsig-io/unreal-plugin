@@ -1,5 +1,13 @@
-﻿#pragma once
+#pragma once
+
+#include "Containers/UnrealString.h"
+#include "HAL/PlatformFileManager.h"
+#include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
+
 #include "json_serialization/unreal_json_utils.hpp"
+
+#include <functional>
 
 namespace statsig_compatibility {
 

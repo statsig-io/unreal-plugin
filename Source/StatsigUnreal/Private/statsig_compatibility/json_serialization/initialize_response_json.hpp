@@ -1,8 +1,15 @@
 #pragma once
 
+#include "Containers/UnrealString.h"
+#include "Dom/JsonObject.h"
+#include "Templates/SharedPointer.h"
+
 #include "json_value.hpp"
-#include "unreal_json_utils.hpp"
 #include "secondary_exposures_json.hpp"
+#include "unreal_json_utils.hpp"
+
+#include <optional>
+#include <string>
 
 namespace statsig::data_types {
 
@@ -11,9 +18,9 @@ namespace gate_evaluation {
 inline data::GateEvaluation FromJson(TSharedPtr<FJsonObject> json) {
   data::GateEvaluation e;
 
-  e.name = FROM_FSTRING(json->GetStringField("name"));
-  e.rule_id = FROM_FSTRING(json->GetStringField("rule_id"));
-  e.value = json->HasField("value") ? json->GetBoolField("value") : false;
+  e.name = FROM_FSTRING(json->GetStringField(TEXT("name")));
+  e.rule_id = FROM_FSTRING(json->GetStringField(TEXT("rule_id")));
+  e.value = json->HasField(TEXT("value")) ? json->GetBoolField(TEXT("value")) : false;
   e.secondary_exposures = secondary_exposures::FromJson(
       json, "secondary_exposures");
 
@@ -27,10 +34,10 @@ namespace config_evaluation {
 inline data::ConfigEvaluation FromJson(TSharedPtr<FJsonObject> json) {
   data::ConfigEvaluation e;
 
-  e.name = FROM_FSTRING(json->GetStringField("name"));
-  e.rule_id = FROM_FSTRING(json->GetStringField("rule_id"));
+  e.name = FROM_FSTRING(json->GetStringField(TEXT("name")));
+  e.rule_id = FROM_FSTRING(json->GetStringField(TEXT("rule_id")));
 
-  e.value = json->GetObjectField("value");
+  e.value = json->GetObjectField(TEXT("value"));
   e.secondary_exposures = secondary_exposures::FromJson(
       json, "secondary_exposures");
   return e;
@@ -44,14 +51,14 @@ namespace layer_evaluation {
 inline data::LayerEvaluation FromJson(TSharedPtr<FJsonObject> json) {
   data::LayerEvaluation e;
 
-  e.name = FROM_FSTRING(json->GetStringField("name"));
-  e.rule_id = FROM_FSTRING(json->GetStringField("rule_id"));
+  e.name = FROM_FSTRING(json->GetStringField(TEXT("name")));
+  e.rule_id = FROM_FSTRING(json->GetStringField(TEXT("rule_id")));
 
-  for (const auto& param : json->GetArrayField("explicit_parameters")) {
+  for (const auto& param : json->GetArrayField(TEXT("explicit_parameters"))) {
     e.explicit_parameters.push_back(FROM_FSTRING(param->AsString()));
   }
 
-  e.value = json->GetObjectField("value");
+  e.value = json->GetObjectField(TEXT("value"));
   e.secondary_exposures = secondary_exposures::FromJson(
       json, "secondary_exposures");
   e.undelegated_secondary_exposures = secondary_exposures::FromJson(
