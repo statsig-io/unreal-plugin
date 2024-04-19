@@ -1,14 +1,24 @@
 #pragma once
 
+#include "Containers/Array.h"
+#include "Containers/UnrealString.h"
+#include "Dom/JsonObject.h"
+#include "Dom/JsonValue.h"
+#include "Templates/SharedPointer.h"
+
 #include "statsig_event_internal.hpp"
 #include "statsig_event_json.hpp"
+
+#include <optional>
+#include <string>
+#include <vector>
 
 namespace statsig::data_types::failed_log_event_payload {
 
 inline std::optional<internal::FailedEventPayload> FromJson(
     const TSharedPtr<FJsonObject>& json) {
   const TArray<TSharedPtr<FJsonValue>>* events_json_arr;
-  if (!json->TryGetArrayField("events", events_json_arr)) {
+  if (!json->TryGetArrayField(TEXT("events"), events_json_arr)) {
     return std::nullopt;
   }
 
@@ -25,7 +35,7 @@ inline std::optional<internal::FailedEventPayload> FromJson(
     return std::nullopt;
   }
 
-  failure.attempts = json->GetNumberField("attempts");
+  failure.attempts = json->GetNumberField(TEXT("attempts"));
 
   return failure;
 }

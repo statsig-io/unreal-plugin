@@ -1,5 +1,15 @@
 #pragma once
 
+#include "Containers/UnrealString.h"
+#include "Dom/JsonObject.h"
+#include "Policies/CondensedJsonPrintPolicy.h"
+#include "Serialization/JsonSerializer.h"
+#include "Templates/SharedPointer.h"
+
+#include <optional>
+#include <string>
+#include <unordered_map>
+
 #define TO_FSTRING(input) FString(UTF8_TO_TCHAR(input.c_str()))
 #define FROM_FSTRING(input) TCHAR_TO_UTF8(*input)
 

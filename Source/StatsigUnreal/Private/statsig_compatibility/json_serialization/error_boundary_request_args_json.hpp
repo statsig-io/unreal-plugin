@@ -1,6 +1,14 @@
 #pragma once
 
 
+#include "Containers/Array.h"
+#include "Containers/UnrealString.h"
+#include "Dom/JsonObject.h"
+#include "Dom/JsonValue.h"
+#include "Templates/SharedPointer.h"
+
+#include <string>
+
 namespace statsig::data_types::error_boundary_request_args {
 
 inline std::string Serialize(const internal::ErrorBoundaryRequestArgs &args) {
