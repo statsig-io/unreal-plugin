@@ -38,20 +38,22 @@ public class StatsigUnreal : ModuleRules
 		PrivateIncludePaths.AddRange(
 			new string[]
 			{
-				"StatsigUnreal/Private/statsig_compatibility/json",
-				"StatsigUnreal/Private/statsig-cpp-client-sdk/include",
-				"StatsigUnreal/Private/statsig_compatibility",
+				"StatsigUnreal/Private/compat/json",
 				"StatsigUnreal/Private/statsig-cpp-client-sdk/src",
+				"StatsigUnreal/Private/statsig-cpp-client-sdk/src/public",
+				"StatsigUnreal/Private/compat",
+				"StatsigUnreal/Private/statsig-cpp-client-sdk/src/internal",
 			}
 		);
 
 		PublicIncludePaths.AddRange(
 			new string[]
 			{
-				Path.Combine(ModuleDirectory, "Private/statsig_compatibility/json"),
-				Path.Combine(ModuleDirectory, "Private/statsig-cpp-client-sdk/include"),
-				Path.Combine(ModuleDirectory, "Private/statsig_compatibility"),
+				Path.Combine(ModuleDirectory, "Private/compat/json"),
 				Path.Combine(ModuleDirectory, "Private/statsig-cpp-client-sdk/src"),
+				Path.Combine(ModuleDirectory, "Private/statsig-cpp-client-sdk/src/public"),
+				Path.Combine(ModuleDirectory, "Private/compat"),
+				Path.Combine(ModuleDirectory, "Private/statsig-cpp-client-sdk/src/internal"),
 			}
 		);
 	}

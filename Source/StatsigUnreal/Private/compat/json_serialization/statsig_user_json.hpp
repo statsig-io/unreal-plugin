@@ -100,13 +100,13 @@ inline std::string Serialize(const StatsigUser& user) {
   return unreal_json_utils::JsonObjectToString(ToJson(user));
 }
 
-inline std::optional<StatsigUser> Deserialize(const std::string& input) {
+inline StatsigResult<StatsigUser> Deserialize(const std::string& input) {
   TSharedPtr<FJsonObject> json = unreal_json_utils::StringToJsonObject(input);
   if (json == nullptr) {
-    return std::nullopt;
+    return {JsonFailureStatsigUser};
   }
 
-  return FromJson(json);
+  return {Ok, FromJson(json)};
 }
 
 }

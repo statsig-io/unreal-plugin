@@ -15,14 +15,14 @@
 
 namespace statsig::data_types::failed_log_event_payload {
 
-inline std::optional<internal::FailedEventPayload> FromJson(
+inline std::optional<internal::RetryableEventPayload> FromJson(
     const TSharedPtr<FJsonObject>& json) {
   const TArray<TSharedPtr<FJsonValue>>* events_json_arr;
   if (!json->TryGetArrayField(TEXT("events"), events_json_arr)) {
     return std::nullopt;
   }
 
-  internal::FailedEventPayload failure;
+  internal::RetryableEventPayload failure;
 
   for (const TSharedPtr<FJsonValue>& value : *events_json_arr) {
     if (value.IsValid() && value->Type == EJson::Object) {
@@ -41,7 +41,7 @@ inline std::optional<internal::FailedEventPayload> FromJson(
 }
 
 inline std::string Serialize(
-    const std::vector<internal::FailedEventPayload>& failures) {
+    const std::vector<internal::RetryableEventPayload>& failures) {
   const TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
 
   TArray<TSharedPtr<FJsonValue>> failures_json_arr;
@@ -52,7 +52,8 @@ inline std::string Serialize(
     failure_json->SetNumberField("attempts", failure.attempts);
     TArray<TSharedPtr<FJsonValue>> events_json;
     for (internal::StatsigEventInternal event : failure.events) {
-      auto event_json = MakeShared<FJsonValueObject>(statsig_event::ToJson(event));
+      auto event_json = MakeShared<FJsonValueObject>(
+          statsig_event::ToJson(event));
       events_json.Add(event_json);
     }
     failure_json->SetArrayField("events", events_json);
@@ -63,22 +64,23 @@ inline std::string Serialize(
   return unreal_json_utils::JsonArrayToString(failures_json_arr);
 }
 
-inline std::optional<std::vector<internal::FailedEventPayload>> Deserialize(
+inline StatsigResult<std::vector<internal::RetryableEventPayload>> Deserialize(
     const std::string& input) {
   TSharedPtr<FJsonValue> json_arr;
-  const TSharedRef<TJsonReader<>> reader = TJsonReaderFactory<UTF32CHAR>::Create(
+  const TSharedRef<TJsonReader<>> reader = TJsonReaderFactory<
+    UTF32CHAR>::Create(
       TO_FSTRING(input));
 
   if (!FJsonSerializer::Deserialize(reader, json_arr)) {
-    return std::nullopt;
+    return {JsonFailureRetryableEventPayload};
   }
 
   if (json_arr == nullptr || !json_arr.IsValid() || json_arr->Type !=
       EJson::Array) {
-    return std::nullopt;
+    return {JsonFailureRetryableEventPayload};
   }
 
-  std::vector<internal::FailedEventPayload> failures;
+  std::vector<internal::RetryableEventPayload> failures;
   for (const TSharedPtr<FJsonValue>& json : json_arr->AsArray()) {
     if (json->Type != EJson::Object) {
       continue;
@@ -90,11 +92,7 @@ inline std::optional<std::vector<internal::FailedEventPayload>> Deserialize(
     }
   }
 
-  if (failures.size() == 0) {
-    return std::nullopt;
-  }
-
-  return failures;
+  return {Ok, failures};
 }
 
 }

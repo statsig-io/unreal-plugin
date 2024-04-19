@@ -12,15 +12,15 @@ namespace statsig::data_types::log_event_response {
 
 using LogEventResponse = internal::LogEventResponse;
 
-inline std::optional<LogEventResponse> Deserialize(const std::string& input) {
+inline StatsigResult<LogEventResponse> Deserialize(const std::string& input) {
   TSharedPtr<FJsonObject> json = unreal_json_utils::StringToJsonObject(input);
   if (json == nullptr) {
-    return std::nullopt;
+    return {JsonFailureLogEventResponse};
   }
 
   internal::LogEventResponse response;
   response.success = json->GetBoolField(TEXT("success"));
-  return response;
+  return {Ok, response};
 }
 
-}
+}  // namespace statsig::data_types::log_event_response

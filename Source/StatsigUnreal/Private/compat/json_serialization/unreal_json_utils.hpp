@@ -15,6 +15,16 @@
 
 namespace statsig::data_types::unreal_json_utils {
 
+inline bool HasRequiredFields(const TSharedPtr<FJsonObject>& json, const std::vector<std::string> fields) {
+  for (auto field : fields) {
+    if (!json->HasField(TO_FSTRING(field))) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 inline std::string JsonObjectToString(const TSharedPtr<FJsonObject>& json) {
   FString json_str;
   FJsonSerializer::Serialize(

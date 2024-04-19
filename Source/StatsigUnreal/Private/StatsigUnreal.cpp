@@ -5,8 +5,7 @@
 #include "StatsigClientSettings.h"
 #include "StatsigLogging.h"
 
-#include "statsig/statsig_client.h"
-#include "statsig/statsig_user.h"
+#include "statsig.h"
 
 #define LOCTEXT_NAMESPACE "FStatsigUnrealModule"
 
@@ -90,7 +89,9 @@ void FStatsigUnrealModule::HandleEngineLoopInitComplete()
 
   const double StartTime = FPlatformTime::Seconds();
   auto& client = statsig::StatsigClient::Shared();
-  client.InitializeAsync(TCHAR_TO_UTF8(*StatsigClientSettings.SDKKey), [this, StartTime]() {
+
+  
+  client.InitializeAsync(TCHAR_TO_UTF8(*StatsigClientSettings.SDKKey), [this, StartTime](statsig::StatsigResultCode) {
     UE_LOG(LogStatsig, Log, TEXT("Initialization completed in %f seconds."), FPlatformTime::Seconds() - StartTime);
     AppWillTerminateDelegate = FCoreDelegates::GetApplicationWillTerminateDelegate().AddRaw(this, &ThisClass::HandleAppTerminate);
     AppWillDeactivateDelegate = FCoreDelegates::ApplicationWillDeactivateDelegate.AddRaw(this, &ThisClass::HandleAppDeactivate);
