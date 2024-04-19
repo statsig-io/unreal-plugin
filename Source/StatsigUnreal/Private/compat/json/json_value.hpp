@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Dom/JsonObject.h"
+#include "Dom/JsonValue.h"
+
 #include <optional>
 #include <string>
-
 
 namespace statsig {
 

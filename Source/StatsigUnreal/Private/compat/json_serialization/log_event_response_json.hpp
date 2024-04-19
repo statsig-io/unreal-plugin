@@ -1,7 +1,12 @@
 #pragma once
 
+#include "Dom/JsonObject.h"
+#include "Templates/SharedPointer.h"
+
 #include "statsig_event_internal.hpp"
 #include "unreal_json_utils.hpp"
+
+#include <optional>
 
 namespace statsig::data_types::log_event_response {
 
@@ -14,8 +19,8 @@ inline StatsigResult<LogEventResponse> Deserialize(const std::string& input) {
   }
 
   internal::LogEventResponse response;
-  response.success = json->GetBoolField("success");
+  response.success = json->GetBoolField(TEXT("success"));
   return {Ok, response};
 }
 
-}
+}  // namespace statsig::data_types::log_event_response

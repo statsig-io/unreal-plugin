@@ -1,5 +1,9 @@
 #pragma once
 
+#include "Async/Async.h"
+
+#include <functional>
+
 namespace statsig {
 
 class AsyncHelper {

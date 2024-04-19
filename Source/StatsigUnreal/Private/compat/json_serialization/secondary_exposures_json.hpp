@@ -1,6 +1,12 @@
 #pragma once
 
+#include "Dom/JsonObject.h"
+#include "Dom/JsonValue.h"
+#include "Templates/SharedPointer.h"
+
 #include "unreal_json_utils.hpp"
+
+#include <string>
 
 namespace statsig::data_types::secondary_exposures {
 

@@ -1,5 +1,15 @@
 #pragma once
+
+#include "Containers/UnrealString.h"
+#include "Dom/JsonObject.h"
+#include "Policies/CondensedJsonPrintPolicy.h"
+#include "Serialization/JsonSerializer.h"
+#include "Templates/SharedPointer.h"
+
 #include "unreal_json_utils.hpp"
+
+#include <optional>
+#include <string>
 
 namespace statsig::data_types::statsig_user {
 
@@ -49,15 +59,16 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigUser& user) {
 inline std::optional<StatsigUser>
 FromJson(const TSharedPtr<FJsonObject>& json) {
   auto add_string = [&](const char* field, std::optional<std::string>& target) {
-    if (json->HasField(field)) {
-      target = FROM_FSTRING(json->GetStringField(field));
+    const FString widefield(UTF8_TO_TCHAR(field));
+    if (json->HasField(widefield)) {
+      target = FROM_FSTRING(json->GetStringField(widefield));
     }
   };
 
   StatsigUser user = {};
 
-  if (json->HasField("userID")) {
-    user.user_id = FROM_FSTRING(json->GetStringField("userID"));
+  if (json->HasField(TEXT("userID"))) {
+    user.user_id = FROM_FSTRING(json->GetStringField(TEXT("userID")));
   }
 
   add_string("email", user.email);
@@ -67,19 +78,19 @@ FromJson(const TSharedPtr<FJsonObject>& json) {
   add_string("locale", user.locale);
   add_string("appVersion", user.app_version);
 
-  if (json->HasField("custom")) {
+  if (json->HasField(TEXT("custom"))) {
     user.custom = unreal_json_utils::JsonObjectToUnorderedStringMap(
-        json->GetObjectField("custom"));
+        json->GetObjectField(TEXT("custom")));
   }
 
-  if (json->HasField("privateAttributes")) {
+  if (json->HasField(TEXT("privateAttributes"))) {
     user.private_attributes = unreal_json_utils::JsonObjectToUnorderedStringMap(
-        json->GetObjectField("privateAttributes"));
+        json->GetObjectField(TEXT("privateAttributes")));
   }
 
-  if (json->HasField("customIDs")) {
+  if (json->HasField(TEXT("customIDs"))) {
     user.custom_ids = unreal_json_utils::JsonObjectToUnorderedStringMap(
-        json->GetObjectField("customIDs"));
+        json->GetObjectField(TEXT("customIDs")));
   }
 
   return user;
