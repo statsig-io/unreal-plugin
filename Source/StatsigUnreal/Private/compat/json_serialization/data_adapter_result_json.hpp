@@ -1,6 +1,7 @@
 #pragma once
 
-#include "statsig/evaluations_data_adapter.h"
+#include "unreal_json_utils.hpp"
+#include "evaluations_data_adapter.h"
 
 namespace statsig::data_types::data_adapter_result {
 
@@ -14,18 +15,23 @@ inline std::string Serialize(const DataAdapterResult& result) {
   return unreal_json_utils::JsonObjectToString(json);
 }
 
-inline std::optional<DataAdapterResult> Deserialize(const std::string& input) {
+inline StatsigResult<DataAdapterResult> Deserialize(
+    const std::string& input) {
   TSharedPtr<FJsonObject> json = unreal_json_utils::StringToJsonObject(input);
   if (json == nullptr) {
-    return std::nullopt;
+    return {JsonFailureDataAdapterResult};
   }
 
+  if (!unreal_json_utils::HasRequiredFields(json, {"data", "source", "receivedAt"})) {
+    return {JsonFailureDataAdapterResult};
+  }
+  
   DataAdapterResult result;
   result.data = TCHAR_TO_UTF8(*json->GetStringField(TEXT("data")));
   result.source = static_cast<ValueSource>(json->
     GetNumberField(TEXT("source")));
   result.receivedAt = json->GetNumberField(TEXT("receivedAt"));
-  return result;
+  return {Ok, result};
 }
 
 }

@@ -66,8 +66,7 @@ inline data::LayerEvaluation FromJson(TSharedPtr<FJsonObject> json) {
 
 namespace initialize_response {
 
-inline data::InitializeResponse FromJson(const TSharedPtr<FJsonObject>& json) {
-  data::InitializeResponse response = {};
+inline StatsigResult<data::InitializeResponse> FromJson(const TSharedPtr<FJsonObject>& json) {
 
   auto parse = [&](const FString& field, auto& target, auto func) {
     const TSharedPtr<FJsonObject>* objectField;
@@ -81,6 +80,16 @@ inline data::InitializeResponse FromJson(const TSharedPtr<FJsonObject>& json) {
     }
   };
 
+  if (json->GetBoolField("has_updates") == false) {
+    return {Ok, {}};
+  }
+
+  if (!unreal_json_utils::HasRequiredFields(json, {"time"})) {
+    return {JsonFailureInitializeResponse};
+  }
+
+  data::InitializeResponse response = {};
+
   parse(TEXT("feature_gates"), response.feature_gates,
         gate_evaluation::FromJson);
   parse(TEXT("dynamic_configs"), response.dynamic_configs,
@@ -91,7 +100,7 @@ inline data::InitializeResponse FromJson(const TSharedPtr<FJsonObject>& json) {
   response.time = json->GetNumberField(TEXT("time"));
   response.has_updates = json->GetBoolField(TEXT("has_updates"));
 
-  return response;
+  return {Ok, response};
 }
 
 // Do not serialize init res, just use the raw network response string
@@ -99,10 +108,14 @@ inline data::InitializeResponse FromJson(const TSharedPtr<FJsonObject>& json) {
 //   return unreal_json_utils::JsonObjectToString(ToJson(response));
 // }
 
-inline std::optional<data::InitializeResponse> Deserialize(const std::string& input) {
+inline StatsigResult<data::InitializeResponse> Deserialize(const std::string& input) {
   const auto json = unreal_json_utils::StringToJsonObject(input);
   if (json == nullptr) {
-    return std::nullopt;
+    return {JsonFailureInitializeResponse};
+  }
+
+  if (!unreal_json_utils::HasRequiredFields(json, {"has_updates"})) {
+    return {JsonFailureInitializeResponse};
   }
 
   return FromJson(json);
