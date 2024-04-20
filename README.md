@@ -4,7 +4,7 @@ An Unreal plugin that wraps the Statsig C++ client SDK [https://github.com/stats
 
 Clone the statsig-io/unreal-plugin repository into your projects "Plugins" directory.
 
-```
+```bash
 cd path/to/MyUnrealProject/Plugins
 
 git clone --recurse-submodules https://github.com/statsig-io/unreal-plugin
@@ -12,7 +12,7 @@ git clone --recurse-submodules https://github.com/statsig-io/unreal-plugin
 
 ## Usage
 
-```
+```cpp
 #include "FStatsig.h"
 
 void UNewActorComponent::BeginPlay() {
