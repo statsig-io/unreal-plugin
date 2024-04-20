@@ -28,7 +28,7 @@ inline std::string Serialize(const LogEventRequestArgs& args) {
   const TSharedPtr<FJsonObject> statsig_metadata_json = MakeShareable(
       new FJsonObject);
   for (const auto& [fst, snd] : args.statsig_metadata) {
-    statsig_metadata_json->SetStringField(TO_FSTRING(fst), TO_FSTRING(snd));
+    statsig_metadata_json->SetStringField(ToCompat(fst), ToCompat(snd));
   }
   statsig_metadata_json->SetObjectField(
       TEXT("statsigMetadata"), statsig_metadata_json);

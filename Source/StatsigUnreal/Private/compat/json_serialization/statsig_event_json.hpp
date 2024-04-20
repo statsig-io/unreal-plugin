@@ -17,7 +17,7 @@ using StatsigEventInternal = internal::StatsigEventInternal;
 
 inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal& event) {
   TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
-  json->SetStringField(TEXT("eventName"), TO_FSTRING(event.event_name));
+  json->SetStringField(TEXT("eventName"), ToCompat(event.event_name));
   json->SetNumberField(TEXT("time"), event.time);
   json->SetObjectField(TEXT("user"), statsig_user::ToJson(event.user));
 
@@ -25,7 +25,7 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal& event) {
     const TSharedPtr<FJsonObject> metadata_json =
         MakeShareable(new FJsonObject);
     for (const auto& [fst, snd] : event.metadata.value()) {
-      metadata_json->SetStringField(TO_FSTRING(fst), TO_FSTRING(snd));
+      metadata_json->SetStringField(ToCompat(fst), ToCompat(snd));
     }
     json->SetObjectField(TEXT("metadata"), metadata_json);
   }
@@ -38,7 +38,7 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal& event) {
 
   if (event.string_value.has_value()) {
     json->SetStringField(
-        TEXT("value"), TO_FSTRING(event.string_value.value()));
+        TEXT("value"), ToCompat(event.string_value.value()));
   } else if (event.double_value.has_value()) {
     json->SetNumberField(TEXT("value"), event.double_value.value());
   }
@@ -49,13 +49,13 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal& event) {
 inline StatsigEventInternal FromJson(const TSharedPtr<FJsonObject>& json) {
   StatsigEventInternal event;
 
-  event.event_name = FROM_FSTRING(json->GetStringField(TEXT("eventName")));
+  event.event_name = FromCompat(json->GetStringField(TEXT("eventName")));
   event.time = json->GetNumberField(TEXT("time"));
 
   FString str_value;
   double num_value;
   if (json->TryGetStringField(TEXT("value"), str_value)) {
-    event.string_value = FROM_FSTRING(str_value);
+    event.string_value = FromCompat(str_value);
   } else if (json->TryGetNumberField(TEXT("value"), num_value)) {
     event.double_value = num_value;
   }

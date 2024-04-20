@@ -7,6 +7,7 @@
 #include "Templates/SharedPointer.h"
 
 #include "unreal_json_utils.hpp"
+#include "compat/primitives/string.hpp"
 
 #include <optional>
 #include <string>
@@ -15,9 +16,10 @@ namespace statsig::data_types::statsig_user {
 
 inline TSharedPtr<FJsonObject> ToJson(const StatsigUser& user) {
   TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
-  json->SetStringField(TEXT("userID"), TO_FSTRING(user.user_id));
+  json->SetStringField(TEXT("userID"), user.user_id);
 
-  if (user.custom_ids.size() > 0) {
+  
+  if (GetMapSize(user.custom_ids) > 0) {
     json->SetObjectField(
         TEXT("customIDs"),
         unreal_json_utils::UnorderedStringMapToJsonObject(
@@ -26,10 +28,10 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigUser& user) {
 
   auto add_string = [&](
       const FString& field,
-      const std::optional<std::string>& source
+      const std::optional<String>& source
       ) {
     if (source.has_value()) {
-      json->SetStringField(field, TO_FSTRING(source.value()));
+      json->SetStringField(field, source.value());
     }
   };
 
@@ -58,17 +60,17 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigUser& user) {
 
 inline std::optional<StatsigUser>
 FromJson(const TSharedPtr<FJsonObject>& json) {
-  auto add_string = [&](const char* field, std::optional<std::string>& target) {
+  auto add_string = [&](const char* field, std::optional<String>& target) {
     const FString widefield(UTF8_TO_TCHAR(field));
     if (json->HasField(widefield)) {
-      target = FROM_FSTRING(json->GetStringField(widefield));
+      target = json->GetStringField(widefield);
     }
   };
 
   StatsigUser user = {};
 
   if (json->HasField(TEXT("userID"))) {
-    user.user_id = FROM_FSTRING(json->GetStringField(TEXT("userID")));
+    user.user_id = json->GetStringField(TEXT("userID"));
   }
 
   add_string("email", user.email);
@@ -79,17 +81,17 @@ FromJson(const TSharedPtr<FJsonObject>& json) {
   add_string("appVersion", user.app_version);
 
   if (json->HasField(TEXT("custom"))) {
-    user.custom = unreal_json_utils::JsonObjectToUnorderedStringMap(
+    user.custom = unreal_json_utils::JsonObjectToUnorderedCompatStringMap(
         json->GetObjectField(TEXT("custom")));
   }
 
   if (json->HasField(TEXT("privateAttributes"))) {
-    user.private_attributes = unreal_json_utils::JsonObjectToUnorderedStringMap(
+    user.private_attributes = unreal_json_utils::JsonObjectToUnorderedCompatStringMap(
         json->GetObjectField(TEXT("privateAttributes")));
   }
 
   if (json->HasField(TEXT("customIDs"))) {
-    user.custom_ids = unreal_json_utils::JsonObjectToUnorderedStringMap(
+    user.custom_ids = unreal_json_utils::JsonObjectToUnorderedCompatStringMap(
         json->GetObjectField(TEXT("customIDs")));
   }
 

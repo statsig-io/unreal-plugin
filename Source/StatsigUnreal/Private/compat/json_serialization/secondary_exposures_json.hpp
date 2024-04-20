@@ -19,8 +19,8 @@ inline TArray<TSharedPtr<FJsonValue>> ToJson(
   for (const auto& sec_expo : secondary_exposures) {
     TSharedPtr<FJsonObject> sec_expo_json = MakeShared<FJsonObject>();
     for (const auto& pair : sec_expo) {
-      const FString Key = TO_FSTRING(pair.first);
-      const FString Value = TO_FSTRING(pair.second);
+      const FString Key = ToCompat(pair.first);
+      const FString Value = ToCompat(pair.second);
       sec_expo_json->SetStringField(Key, Value);
     }
     sec_expo_json_array.Add(MakeShared<FJsonValueObject>(sec_expo_json));

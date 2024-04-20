@@ -18,8 +18,8 @@ namespace gate_evaluation {
 inline data::GateEvaluation FromJson(TSharedPtr<FJsonObject> json) {
   data::GateEvaluation e;
 
-  e.name = FROM_FSTRING(json->GetStringField(TEXT("name")));
-  e.rule_id = FROM_FSTRING(json->GetStringField(TEXT("rule_id")));
+  e.name = FromCompat(json->GetStringField(TEXT("name")));
+  e.rule_id = FromCompat(json->GetStringField(TEXT("rule_id")));
   e.value = json->HasField(TEXT("value")) ? json->GetBoolField(TEXT("value")) : false;
   e.secondary_exposures = secondary_exposures::FromJson(
       json, "secondary_exposures");
@@ -34,8 +34,8 @@ namespace config_evaluation {
 inline data::ConfigEvaluation FromJson(TSharedPtr<FJsonObject> json) {
   data::ConfigEvaluation e;
 
-  e.name = FROM_FSTRING(json->GetStringField(TEXT("name")));
-  e.rule_id = FROM_FSTRING(json->GetStringField(TEXT("rule_id")));
+  e.name = FromCompat(json->GetStringField(TEXT("name")));
+  e.rule_id = FromCompat(json->GetStringField(TEXT("rule_id")));
 
   e.value = json->GetObjectField(TEXT("value"));
   e.secondary_exposures = secondary_exposures::FromJson(
@@ -51,11 +51,11 @@ namespace layer_evaluation {
 inline data::LayerEvaluation FromJson(TSharedPtr<FJsonObject> json) {
   data::LayerEvaluation e;
 
-  e.name = FROM_FSTRING(json->GetStringField(TEXT("name")));
-  e.rule_id = FROM_FSTRING(json->GetStringField(TEXT("rule_id")));
+  e.name = FromCompat(json->GetStringField(TEXT("name")));
+  e.rule_id = FromCompat(json->GetStringField(TEXT("rule_id")));
 
   for (const auto& param : json->GetArrayField(TEXT("explicit_parameters"))) {
-    e.explicit_parameters.push_back(FROM_FSTRING(param->AsString()));
+    e.explicit_parameters.push_back(FromCompat(param->AsString()));
   }
 
   e.value = json->GetObjectField(TEXT("value"));
@@ -81,7 +81,7 @@ inline StatsigResult<data::InitializeResponse> FromJson(const TSharedPtr<FJsonOb
       for (const auto& Pair : objectField->Get()->Values) {
         FString Key = Pair.Key;
         const TSharedPtr<FJsonObject> Value = Pair.Value->AsObject();
-        const std::string Name = FROM_FSTRING(Key);
+        const std::string Name = FromCompat(Key);
         target[Name] = func(Value);
       }
     }

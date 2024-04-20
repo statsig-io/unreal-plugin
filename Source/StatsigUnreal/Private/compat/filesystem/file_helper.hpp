@@ -1,47 +1,48 @@
-#pragma once
+﻿#pragma once
 
 #include "Containers/UnrealString.h"
 #include "HAL/PlatformFileManager.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 
-#include "json_serialization/unreal_json_utils.hpp"
+#include "compat/primitives/string.hpp"
 
 #include <functional>
 
 namespace statsig_compatibility {
 
 class FileHelper {
+  
 public:
   static std::string GetCacheDir() {
     const auto dir = GetCacheDirFString();
-    return FROM_FSTRING(dir);
+    return statsig::FromCompat(dir);
   }
 
   static void WriteStringToFile(
       const std::string& content,
       const std::string& path
       ) {
-    FFileHelper::SaveStringToFile(TO_FSTRING(content), *TO_FSTRING(path));
+    FFileHelper::SaveStringToFile(statsig::ToCompat(content), *statsig::ToCompat(path));
   }
 
   static std::string CombinePath(const std::string& left,
                                  const std::string& right) {
-    auto path = FPaths::Combine(*TO_FSTRING(left), *TO_FSTRING(right));
+    auto path = FPaths::Combine(*statsig::ToCompat(left), *statsig::ToCompat(right));
     return TCHAR_TO_UTF8(*path);
   }
 
   static std::optional<std::string> ReadStringToFile(const std::string& path) {
     FString result;
-    if (FFileHelper::LoadFileToString(result, *TO_FSTRING(path))) {
-      return FROM_FSTRING(result);
+    if (FFileHelper::LoadFileToString(result, *statsig::ToCompat(path))) {
+      return statsig::FromCompat(result);
     }
     return std::nullopt;
   }
 
   static void EnsureCacheDirectoryExists() {
     IPlatformFile& manager = FPlatformFileManager::Get().GetPlatformFile();
-    auto dir = TO_FSTRING(GetCacheDir());
+    const auto dir = statsig::ToCompat(GetCacheDir());
     if (!manager.DirectoryExists(*dir)) {
       manager.CreateDirectory(*dir);
     }
@@ -49,14 +50,14 @@ public:
 
   static void DeleteFile(const std::string& path) {
     IPlatformFile& manager = FPlatformFileManager::Get().GetPlatformFile();
-    manager.DeleteFile(*TO_FSTRING(path));
+    manager.DeleteFile(*statsig::ToCompat(path));
   }
 
   static std::vector<std::string> GetCachePathsSortedYoungestFirst(
       std::string prefix) {
     TArray<FString> paths;
     IPlatformFile& manager = FPlatformFileManager::Get().GetPlatformFile();
-    FString f_prefix = TO_FSTRING(prefix);
+    FString f_prefix = statsig::ToCompat(prefix);
 
     manager.IterateDirectory(
         *GetCacheDirFString(),
@@ -81,7 +82,7 @@ public:
 
     std::vector<std::string> result;
     for (const FString& path : paths) {
-      result.push_back(FROM_FSTRING(path));
+      result.push_back(statsig::FromCompat(path));
     }
     return result;
   }

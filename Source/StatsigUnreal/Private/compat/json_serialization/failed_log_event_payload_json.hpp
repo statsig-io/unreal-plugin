@@ -68,8 +68,7 @@ inline StatsigResult<std::vector<internal::RetryableEventPayload>> Deserialize(
     const std::string& input) {
   TSharedPtr<FJsonValue> json_arr;
   const TSharedRef<TJsonReader<>> reader = TJsonReaderFactory<
-    UTF32CHAR>::Create(
-      TO_FSTRING(input));
+    UTF32CHAR>::Create(ToCompat(input));
 
   if (!FJsonSerializer::Deserialize(reader, json_arr)) {
     return {JsonFailureRetryableEventPayload};

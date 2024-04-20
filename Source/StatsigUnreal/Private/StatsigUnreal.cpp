@@ -4,8 +4,9 @@
 #include "Stats/Stats.h"
 #include "StatsigClientSettings.h"
 #include "StatsigLogging.h"
-
 #include "statsig.h"
+
+#include "statsig/statsig.h"
 
 #define LOCTEXT_NAMESPACE "FStatsigUnrealModule"
 
@@ -21,9 +22,7 @@ protected:
       if (FParse::Command(&Cmd, TEXT("TESTGATE"))) {
         FString GateToTest;
         if (FParse::Token(Cmd, GateToTest, false)) {
-          auto& client = statsig::StatsigClient::Shared();
-
-          if (client.CheckGate(TCHAR_TO_UTF8(*GateToTest))) {
+          if (FStatsig::CheckGate(GateToTest)) {
               UE_LOG(LogStatsig, Log, TEXT("CheckGate: Gate: %s Result: Pass"), *GateToTest);
             } else {
               UE_LOG(LogStatsig, Log, TEXT("CheckGate: Gate: %s Result: Fail"), *GateToTest);
