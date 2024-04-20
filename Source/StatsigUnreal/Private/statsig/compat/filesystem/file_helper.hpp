@@ -5,7 +5,7 @@
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 
-#include "compat/primitives/string.hpp"
+#include "statsig/compat/primitives/string.hpp"
 
 #include <functional>
 
