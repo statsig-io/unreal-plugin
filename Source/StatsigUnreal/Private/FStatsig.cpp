@@ -1,6 +1,7 @@
-#include "Statsig.h"
+#include "FStatsig.h"
 
-#include "statsig/statsig.h"
+// #include "statsig-cpp-client-sdk/src/statsig/statsig.h"
+#include "statsig.h"
 
 using namespace statsig;
 

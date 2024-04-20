@@ -1,9 +1,9 @@
 #include "StatsigTestActorComponent.h"
 
-#include "Statsig.h"
 #include "Engine/Engine.h"
+#include "FStatsig.h"
 
-#include "statsig/statsig.h"
+#include "statsig.h"
 
 using namespace statsig;
 

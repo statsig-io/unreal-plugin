@@ -4,7 +4,7 @@
 #include "Dom/JsonValue.h"
 #include "Templates/SharedPointer.h"
 
-#include "statsig/evaluations_data_adapter.h"
+#include "../evaluations_data_adapter.h"
 #include "unreal_json_utils.hpp"
 
 #include <string>

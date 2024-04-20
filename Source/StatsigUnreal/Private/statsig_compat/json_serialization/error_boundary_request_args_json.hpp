@@ -7,6 +7,8 @@
 #include "Dom/JsonValue.h"
 #include "Templates/SharedPointer.h"
 
+#include "error_boundary_request_args.h"
+
 #include <string>
 
 namespace statsig::data_types::error_boundary_request_args {

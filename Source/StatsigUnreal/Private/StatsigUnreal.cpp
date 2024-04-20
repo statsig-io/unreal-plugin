@@ -4,9 +4,9 @@
 #include "Stats/Stats.h"
 #include "StatsigClientSettings.h"
 #include "StatsigLogging.h"
-#include "statsig.h"
+#include "FStatsig.h"
 
-#include "statsig/statsig.h"
+#include "statsig.h"
 
 #define LOCTEXT_NAMESPACE "FStatsigUnrealModule"
 

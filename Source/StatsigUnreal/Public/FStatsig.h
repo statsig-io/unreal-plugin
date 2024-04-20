@@ -1,6 +1,6 @@
 #pragma once
 
-#include "statsig/statsig.h"
+#include "statsig.h"
 
 class FStatsig {
 public:

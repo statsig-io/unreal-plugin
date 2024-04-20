@@ -7,7 +7,7 @@
 #include "Templates/SharedPointer.h"
 
 #include "unreal_json_utils.hpp"
-#include "statsig/compat/primitives/string.hpp"
+#include "statsig_compat/primitives/string.hpp"
 
 #include <optional>
 #include <string>
