@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-namespace statsig::data_types::failed_log_event_payload {
+namespace statsig::data_types::retryable_event_payload {
 
 inline std::optional<internal::RetryableEventPayload> FromJson(
     const TSharedPtr<FJsonObject>& json) {
@@ -40,7 +40,7 @@ inline std::optional<internal::RetryableEventPayload> FromJson(
   return failure;
 }
 
-inline std::string Serialize(
+inline StatsigResult<std::string> Serialize(
     const std::vector<internal::RetryableEventPayload>& failures) {
   const TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
 
@@ -61,7 +61,7 @@ inline std::string Serialize(
     failures_json_arr.Add(MakeShared<FJsonValueObject>(failure_json));
   }
 
-  return unreal_json_utils::JsonArrayToString(failures_json_arr);
+  return {Ok, unreal_json_utils::JsonArrayToString(failures_json_arr)};
 }
 
 inline StatsigResult<std::vector<internal::RetryableEventPayload>> Deserialize(

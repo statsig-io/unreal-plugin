@@ -10,10 +10,7 @@ public class StatsigUnreal : ModuleRules
 
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDefinitions.Add("STATSIG_DISABLE_EXCEPTIONS=1");
-		PublicDefinitions.Add("STATSIG_DISABLE_FILESYSTEM=1");
-		PublicDefinitions.Add("STATSIG_UNREAL=1");
-		PublicDefinitions.Add("B=1");
+		PublicDefinitions.Add("STATSIG_UNREAL_PLUGIN=1");
 		
 		PublicDependencyModuleNames.AddRange(
 			new string[]
@@ -39,21 +36,9 @@ public class StatsigUnreal : ModuleRules
 		PrivateIncludePaths.AddRange(
 			new string[]
 			{
-				// "StatsigUnreal/Private/compat/primitives",
 				"StatsigUnreal/statsig-cpp-client-sdk/src/statsig",
-				// "StatsigUnreal/Private/compat",
 				"StatsigUnreal/statsig-cpp-client-sdk/src/statsig/internal",
 			}
 		);
-
-		// PublicIncludePaths.AddRange(
-		// 	new string[]
-		// 	{
-		// 		// Path.Combine(ModuleDirectory, "Private/compat/primitives"),
-		// 		Path.Combine(ModuleDirectory, "statsig-cpp-client-sdk/src"),
-		// 		// Path.Combine(ModuleDirectory, "Private/compat"),
-		// 		Path.Combine(ModuleDirectory, "statsig-cpp-client-sdk/src/statsig/internal"),
-		// 	}
-		// );
 	}
 }

@@ -11,14 +11,14 @@
 
 namespace statsig::data_types::data_adapter_result {
 
-inline std::string Serialize(const DataAdapterResult& result) {
+inline StatsigResult<std::string> Serialize(const DataAdapterResult& result) {
   const TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
 
   json->SetStringField(TEXT("data"), FString(result.data.c_str()));
   json->SetNumberField(TEXT("source"), static_cast<int>(result.source));
   json->SetNumberField(TEXT("receivedAt"), result.receivedAt);
 
-  return unreal_json_utils::JsonObjectToString(json);
+  return {Ok, unreal_json_utils::JsonObjectToString(json)};
 }
 
 inline StatsigResult<DataAdapterResult> Deserialize(const std::string& input) {

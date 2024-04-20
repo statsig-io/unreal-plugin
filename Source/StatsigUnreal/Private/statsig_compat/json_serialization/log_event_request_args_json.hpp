@@ -14,7 +14,7 @@ namespace statsig::data_types::log_event_request_args {
 
 using LogEventRequestArgs = internal::LogEventRequestArgs;
 
-inline std::string Serialize(const LogEventRequestArgs& args) {
+inline StatsigResult<std::string> Serialize(const LogEventRequestArgs& args) {
   const TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
 
   TArray<TSharedPtr<FJsonValue>> events_json_arr;
@@ -33,7 +33,7 @@ inline std::string Serialize(const LogEventRequestArgs& args) {
   statsig_metadata_json->SetObjectField(
       TEXT("statsigMetadata"), statsig_metadata_json);
 
-  return unreal_json_utils::JsonObjectToString(json);
+  return {Ok, unreal_json_utils::JsonObjectToString(json)};
 }
 
 }

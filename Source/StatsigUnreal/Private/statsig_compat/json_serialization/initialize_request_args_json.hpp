@@ -11,7 +11,7 @@
 
 namespace statsig::data_types::initialize_request_args {
 
-inline std::string Serialize(const internal::InitializeRequestArgs &args) {
+inline StatsigResult<std::string> Serialize(const internal::InitializeRequestArgs &args) {
   const TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
 
   json->SetStringField(TEXT("hash"), FString(args.hash.c_str()));
@@ -25,7 +25,7 @@ inline std::string Serialize(const internal::InitializeRequestArgs &args) {
   }
   json->SetObjectField(TEXT("statsigMetadata"), StatsigMetaJson);
 
-  return unreal_json_utils::JsonObjectToString(json);
+  return {Ok, unreal_json_utils::JsonObjectToString(json)};
 }
 
 }

@@ -16,8 +16,6 @@ namespace statsig::data_types::statsig_user {
 
 inline TSharedPtr<FJsonObject> ToJson(const StatsigUser& user) {
   TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
-  json->SetStringField(TEXT("userID"), user.user_id);
-
   
   if (GetMapSize(user.custom_ids) > 0) {
     json->SetObjectField(
@@ -35,6 +33,7 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigUser& user) {
     }
   };
 
+  add_string("userID", user.user_id);
   add_string("email", user.email);
   add_string("ip", user.ip);
   add_string("userAgent", user.user_agent);
@@ -98,8 +97,8 @@ FromJson(const TSharedPtr<FJsonObject>& json) {
   return user;
 }
 
-inline std::string Serialize(const StatsigUser& user) {
-  return unreal_json_utils::JsonObjectToString(ToJson(user));
+inline StatsigResult<std::string> Serialize(const StatsigUser& user) {
+  return {Ok, unreal_json_utils::JsonObjectToString(ToJson(user))};
 }
 
 inline StatsigResult<StatsigUser> Deserialize(const std::string& input) {

@@ -15,7 +15,7 @@ namespace statsig::data_types::statsig_event {
 
 using StatsigEventInternal = internal::StatsigEventInternal;
 
-inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal& event) {
+inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal &event) {
   TSharedPtr<FJsonObject> json = MakeShareable(new FJsonObject());
   json->SetStringField(TEXT("eventName"), ToCompat(event.event_name));
   json->SetNumberField(TEXT("time"), event.time);
@@ -24,14 +24,14 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal& event) {
   if (event.metadata.has_value()) {
     const TSharedPtr<FJsonObject> metadata_json =
         MakeShareable(new FJsonObject);
-    for (const auto& [fst, snd] : event.metadata.value()) {
+    for (const auto &[fst, snd] : event.metadata.value()) {
       metadata_json->SetStringField(ToCompat(fst), ToCompat(snd));
     }
     json->SetObjectField(TEXT("metadata"), metadata_json);
   }
 
   if (event.secondary_exposures.has_value()) {
-    auto sec_expo_json_arr = secondary_exposures::ToJson(
+      const auto sec_expo_json_arr = secondary_exposures::ToJson(
         event.secondary_exposures.value());
     json->SetArrayField(TEXT("secondaryExposures"), sec_expo_json_arr);
   }
@@ -46,7 +46,7 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal& event) {
   return json;
 }
 
-inline StatsigEventInternal FromJson(const TSharedPtr<FJsonObject>& json) {
+inline StatsigEventInternal FromJson(const TSharedPtr<FJsonObject> &json) {
   StatsigEventInternal event;
 
   event.event_name = FromCompat(json->GetStringField(TEXT("eventName")));
@@ -78,12 +78,12 @@ inline StatsigEventInternal FromJson(const TSharedPtr<FJsonObject>& json) {
   return event;
 }
 
-inline std::string Serialize(const StatsigEventInternal& event) {
+inline std::string Serialize(const StatsigEventInternal &event) {
   return unreal_json_utils::JsonObjectToString(ToJson(event));
 }
 
 inline std::optional<StatsigEventInternal>
-Deserialize(const std::string& input) {
+Deserialize(const std::string &input) {
   const auto json = unreal_json_utils::StringToJsonObject(input);
   if (json == nullptr || !json.IsValid()) {
     return std::nullopt;
@@ -91,6 +91,5 @@ Deserialize(const std::string& input) {
 
   return FromJson(json);
 }
-
 
 }
