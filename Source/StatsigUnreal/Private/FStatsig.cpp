@@ -20,6 +20,17 @@ void FStatsig::InitializeAsync(
   StatsigClient::Shared().InitializeAsync(SdkKey, Callback, User, Options);
 }
 
+StatsigResultCode FStatsig::UpdateUserSync(const StatsigUser& User) {
+  return StatsigClient::Shared().UpdateUserSync(User);
+}
+
+void FStatsig::UpdateUserAsync(
+    const StatsigUser& User,
+    const std::function<void(StatsigResultCode)>& Callback
+    ) {
+  StatsigClient::Shared().UpdateUserAsync(User, Callback);
+}
+
 bool FStatsig::CheckGate(const FString& GateName) {
   return StatsigClient::Shared().CheckGate(GateName);
 }
@@ -36,5 +47,3 @@ Experiment FStatsig::GetExperiment(const FString& ExperimentName) {
 Layer FStatsig::GetLayer(const FString& LayerName) {
   return StatsigClient::Shared().GetLayer(LayerName);
 }
-
-
