@@ -59,10 +59,9 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigUser& user) {
 
 inline std::optional<StatsigUser>
 FromJson(const TSharedPtr<FJsonObject>& json) {
-  auto add_string = [&](const char* field, std::optional<String>& target) {
-    const FString widefield(UTF8_TO_TCHAR(field));
-    if (json->HasField(widefield)) {
-      target = json->GetStringField(widefield);
+  auto add_string = [&](const FString &field, std::optional<String>& target) {
+    if (json->HasField(field)) {
+      target = json->GetStringField(field);
     }
   };
 
@@ -72,12 +71,12 @@ FromJson(const TSharedPtr<FJsonObject>& json) {
     user.user_id = json->GetStringField(TEXT("userID"));
   }
 
-  add_string("email", user.email);
-  add_string("ip", user.ip);
-  add_string("userAgent", user.user_agent);
-  add_string("country", user.country);
-  add_string("locale", user.locale);
-  add_string("appVersion", user.app_version);
+  add_string(TEXT("email"), user.email);
+  add_string(TEXT("ip"), user.ip);
+  add_string(TEXT("userAgent"), user.user_agent);
+  add_string(TEXT("country"), user.country);
+  add_string(TEXT("locale"), user.locale);
+  add_string(TEXT("appVersion"), user.app_version);
 
   if (json->HasField(TEXT("custom"))) {
     user.custom = unreal_json_utils::JsonObjectToUnorderedCompatStringMap(
