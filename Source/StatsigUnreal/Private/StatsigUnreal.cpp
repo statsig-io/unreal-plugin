@@ -3,7 +3,6 @@
 #include "Misc/CoreDelegates.h"
 #include "Stats/Stats.h"
 #include "StatsigClientSettings.h"
-#include "StatsigLogging.h"
 #include "FStatsig.h"
 
 #include "statsig.h"

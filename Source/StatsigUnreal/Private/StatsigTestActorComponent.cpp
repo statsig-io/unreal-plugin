@@ -60,10 +60,13 @@ void UStatsigTestActorComponent::BeginPlay() {
   StatsigUser user;
   user.user_id = UserID;
 
+  StatsigOptions opts;
+  opts.output_logger_level = LogLevel::Debug;
+
   if (bInitializeAsync) {
-    FStatsig::InitializeAsync(SDKKey, [](auto) { QueryStatsig(); }, user);
+    FStatsig::InitializeAsync(SDKKey, [](auto) { QueryStatsig(); }, user, opts);
   } else {
-    FStatsig::InitializeSync(SDKKey, user);
+    FStatsig::InitializeSync(SDKKey, user, opts);
     QueryStatsig();
   }
 }

@@ -99,21 +99,39 @@ JsonObjectToUnorderedStringMap(
   return ResultMap;
 }
 
-inline StringMap
-JsonObjectToUnorderedCompatStringMap(
-    const TSharedPtr<FJsonObject>& JsonObject) {
-  StringMap ResultMap;
+inline std::unordered_map<std::string, JsonValue>
+JsonObjectToUnorderedJsonValueMap(
+    const TSharedPtr<FJsonObject>& json_object) {
+  std::unordered_map<std::string, JsonValue> result_map;
 
-  if (JsonObject.IsValid()) {
-    for (auto It = JsonObject->Values.CreateConstIterator(); It; ++It) {
-      const FString Key = It.Key();
-      const FString Value = JsonObject->GetStringField(Key);
+  if (json_object.IsValid()) {
+    for (auto it = json_object->Values.CreateConstIterator(); it; ++it) {
+      const FString key = it.Key();
+      const FString value = json_object->GetStringField(key);
 
-      ResultMap[Key] = Value;
+      result_map.emplace(TCHAR_TO_UTF8(*key), CompatStringToJsonValue(value));
     }
   }
 
-  return ResultMap;
+  return result_map;
+}
+
+
+inline StringMap
+JsonObjectToUnorderedCompatStringMap(
+    const TSharedPtr<FJsonObject>& json_object) {
+  StringMap result_map;
+
+  if (json_object.IsValid()) {
+    for (auto it = json_object->Values.CreateConstIterator(); it; ++it) {
+      const FString key = it.Key();
+      const FString value = json_object->GetStringField(key);
+
+      result_map[key] = value;
+    }
+  }
+
+  return result_map;
 }
 
 

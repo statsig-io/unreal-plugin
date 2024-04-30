@@ -10,6 +10,8 @@ namespace statsig::internal {
 struct HttpResponse {
   const std::string text;
   const int status = -1;
+  const std::string sdk_region;
+  const std::optional<std::string> error;
 };
 
 struct HttpRequest {
@@ -48,13 +50,19 @@ public:
                    const bool bSuccess
                    ) {
                      if (!bSuccess || !Res.IsValid()) {
-                       callback({});
+                       callback({"", -1, "", "FHttpModule::Error::Unknown"});
                        return;
                      }
 
-                     const auto Status = Res->GetResponseCode();
-                     const auto Text = Res->GetContentAsString();
-                     callback({TCHAR_TO_UTF8(*Text), Status});
+                     const auto status = Res->GetResponseCode();
+                     const auto text = Res->GetContentAsString();
+
+                     std::string region;
+                     if (Res->GetHeader("x-statsig-region").Len() > 0) {
+                       region = TCHAR_TO_UTF8(* Res->GetHeader("x-statsig-region"));
+                     }
+
+                     callback({TCHAR_TO_UTF8(*text), status, region});
                    });
 
     HttpRequest->ProcessRequest();

@@ -15,6 +15,11 @@ public:
     });
   }
 
+  static void Sleep(const long milliseconds) {
+    const auto seconds = milliseconds / 1000.0f;
+    FPlatformProcess::Sleep(seconds);
+  }
+
 };
 
 }

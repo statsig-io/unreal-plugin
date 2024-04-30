@@ -25,7 +25,7 @@ inline TSharedPtr<FJsonObject> ToJson(const StatsigEventInternal &event) {
     const TSharedPtr<FJsonObject> metadata_json =
         MakeShareable(new FJsonObject);
     for (const auto &[fst, snd] : event.metadata.value()) {
-      metadata_json->SetStringField(ToCompat(fst), ToCompat(snd));
+      metadata_json->SetField(ToCompat(fst), snd);
     }
     json->SetObjectField(TEXT("metadata"), metadata_json);
   }
@@ -66,7 +66,7 @@ inline StatsigEventInternal FromJson(const TSharedPtr<FJsonObject> &json) {
   }
 
   if (json->HasField(TEXT("metadata"))) {
-    event.metadata = unreal_json_utils::JsonObjectToUnorderedStringMap(
+    event.metadata = unreal_json_utils::JsonObjectToUnorderedJsonValueMap(
         json->GetObjectField(TEXT("metadata")));
   }
 
