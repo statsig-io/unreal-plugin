@@ -4,7 +4,7 @@
 
 #include <functional>
 
-namespace statsig {
+namespace statsig_compatibility {
 
 class AsyncHelper {
 public:

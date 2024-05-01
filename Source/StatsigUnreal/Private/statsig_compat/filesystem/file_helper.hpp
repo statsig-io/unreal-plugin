@@ -12,7 +12,7 @@
 namespace statsig_compatibility {
 
 class FileHelper {
-  
+
 public:
   static std::string GetCacheDir() {
     const auto dir = GetCacheDirFString();
@@ -21,14 +21,23 @@ public:
 
   static void WriteStringToFile(
       const std::string& content,
-      const std::string& path
+      const std::string& path,
+      const std::function<void(bool)>& callback
       ) {
-    FFileHelper::SaveStringToFile(statsig::ToCompat(content), *statsig::ToCompat(path));
+    AsyncPool(*GIOThreadPool, [content, path, callback] {
+      FFileHelper::SaveStringToFile(
+          statsig::ToCompat(content),
+          *statsig::ToCompat(path)
+          );
+
+      callback(true);
+    });
   }
 
   static std::string CombinePath(const std::string& left,
                                  const std::string& right) {
-    auto path = FPaths::Combine(*statsig::ToCompat(left), *statsig::ToCompat(right));
+    auto path = FPaths::Combine(*statsig::ToCompat(left),
+                                *statsig::ToCompat(right));
     return TCHAR_TO_UTF8(*path);
   }
 
