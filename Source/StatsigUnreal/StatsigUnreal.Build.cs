@@ -11,7 +11,7 @@ public class StatsigUnreal : ModuleRules
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDefinitions.Add("STATSIG_UNREAL_PLUGIN=1");
-		
+
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
@@ -40,5 +40,11 @@ public class StatsigUnreal : ModuleRules
 				"StatsigUnreal/statsig-cpp-client-sdk/src/statsig/internal",
 			}
 		);
+
+		PublicIncludePaths.AddRange(new string[]
+		{
+			Path.Combine(ModuleDirectory, "statsig-cpp-client-sdk/src/statsig"),
+			Path.Combine(ModuleDirectory, "statsig-cpp-client-sdk/src/statsig/internal"),
+		});
 	}
 }
