@@ -20,6 +20,7 @@ public:
   }
 
   static void WriteStringToFile(
+      const std::string &sdk_key,
       const std::string& content,
       const std::string& path,
       const std::function<void(bool)>& callback
