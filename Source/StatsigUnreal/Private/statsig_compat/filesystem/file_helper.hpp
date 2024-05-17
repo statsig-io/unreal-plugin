@@ -14,63 +14,64 @@ namespace statsig_compatibility {
 class FileHelper {
 
 public:
-  static std::string GetCacheDir() {
-    const auto dir = GetCacheDirFString();
-    return statsig::FromCompat(dir);
+  static statsig::FilePath GetCacheDir(const statsig::StatsigOptions &options) {
+    const auto project_dir = FPaths::ProjectPersistentDownloadDir();
+    return FPaths::Combine(*project_dir, "Statsig");
   }
 
   static void WriteStringToFile(
-      const std::string &sdk_key,
-      const std::string& content,
-      const std::string& path,
-      const std::function<void(bool)>& callback
-      ) {
+    const std::string &sdk_key,
+    const std::string &content,
+    const statsig::FilePath &path,
+    const std::function<void(bool)> &callback
+  ) {
     AsyncPool(*GIOThreadPool, [content, path, callback] {
-      FFileHelper::SaveStringToFile(
-          statsig::ToCompat(content),
-          *statsig::ToCompat(path)
-          );
-
+      FFileHelper::SaveStringToFile(statsig::ToCompat(content), *path);
       callback(true);
     });
   }
 
-  static std::string CombinePath(const std::string& left,
-                                 const std::string& right) {
-    auto path = FPaths::Combine(*statsig::ToCompat(left),
-                                *statsig::ToCompat(right));
-    return TCHAR_TO_UTF8(*path);
+  static statsig::FilePath CombinePath(
+    const statsig::FilePath &left,
+    const statsig::FilePath &right
+  ) {
+    const auto path = FPaths::Combine(*left, *right);
+    return path;
   }
 
-  static std::optional<std::string> ReadStringToFile(const std::string& path) {
+  static std::optional<std::string> ReadStringToFile(const statsig::FilePath &path) {
     FString result;
-    if (FFileHelper::LoadFileToString(result, *statsig::ToCompat(path))) {
+    if (FFileHelper::LoadFileToString(result, *path)) {
       return statsig::FromCompat(result);
     }
     return std::nullopt;
   }
 
-  static void EnsureCacheDirectoryExists() {
+  static void EnsureCacheDirectoryExists(
+    const statsig::StatsigOptions &options
+  ) {
     IPlatformFile& manager = FPlatformFileManager::Get().GetPlatformFile();
-    const auto dir = statsig::ToCompat(GetCacheDir());
+    const auto dir = GetCacheDir(options);
     if (!manager.DirectoryExists(*dir)) {
       manager.CreateDirectory(*dir);
     }
   }
 
-  static void DeleteFile(const std::string& path) {
+  static void DeleteFile(const statsig::FilePath &path) {
     IPlatformFile& manager = FPlatformFileManager::Get().GetPlatformFile();
-    manager.DeleteFile(*statsig::ToCompat(path));
+    manager.DeleteFile(*path);
   }
 
-  static std::vector<std::string> GetCachePathsSortedYoungestFirst(
-      std::string prefix) {
+  static std::vector<statsig::FilePath> GetCachePathsSortedYoungestFirst(
+    const statsig::StatsigOptions &options,
+    std::string prefix
+  ) {
     TArray<FString> paths;
     IPlatformFile& manager = FPlatformFileManager::Get().GetPlatformFile();
     FString f_prefix = statsig::ToCompat(prefix);
 
     manager.IterateDirectory(
-        *GetCacheDirFString(),
+        *GetCacheDir(options),
         [&paths, &f_prefix](const FString& file_or_dir, bool bIsDirectory) {
           if (bIsDirectory) {
             return true;
@@ -90,19 +91,12 @@ public:
       return left_time > right_time;
     });
 
-    std::vector<std::string> result;
+    std::vector<statsig::FilePath> result;
     for (const FString& path : paths) {
-      result.push_back(statsig::FromCompat(path));
+      result.push_back(path);
     }
     return result;
   }
-
-private:
-  static FString GetCacheDirFString() {
-    const auto project_dir = FPaths::ProjectPersistentDownloadDir();
-    return FPaths::Combine(*project_dir, "Statsig");
-  }
-
 };
 
 }

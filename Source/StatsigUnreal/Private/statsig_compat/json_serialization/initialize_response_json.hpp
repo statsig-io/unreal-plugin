@@ -35,6 +35,11 @@ inline data::ConfigEvaluation FromJson(TSharedPtr<FJsonObject> json) {
 
   e.name = FromCompat(json->GetStringField(TEXT("name")));
   e.rule_id = FromCompat(json->GetStringField(TEXT("rule_id")));
+  
+  FString group_name;
+  if (json->TryGetStringField(TEXT("group_name"), group_name) && !group_name.IsEmpty()) {
+    e.group_name = FromCompat(group_name);
+  }
 
   e.value = json->GetObjectField(TEXT("value"));
   e.secondary_exposures = secondary_exposures::FromJson(
@@ -55,6 +60,11 @@ inline data::LayerEvaluation FromJson(TSharedPtr<FJsonObject> json) {
 
   for (const auto& param : json->GetArrayField(TEXT("explicit_parameters"))) {
     e.explicit_parameters.push_back(FromCompat(param->AsString()));
+  }
+
+  FString group_name;
+  if (json->TryGetStringField(TEXT("group_name"), group_name) && !group_name.IsEmpty()) {
+    e.group_name = FromCompat(group_name);
   }
 
   e.value = json->GetObjectField(TEXT("value"));
