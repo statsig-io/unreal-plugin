@@ -1,15 +1,17 @@
 #pragma once
 
+#include <optional>
+#include <string>
+#include <unordered_map>
+
+#include "statsig_compat/primitives/json_value.hpp"
+#include "statsig_compat/primitives/map.hpp"
+
 #include "Containers/UnrealString.h"
 #include "Dom/JsonObject.h"
 #include "Policies/CondensedJsonPrintPolicy.h"
 #include "Serialization/JsonSerializer.h"
 #include "Templates/SharedPointer.h"
-
-#include <optional>
-#include <string>
-#include <unordered_map>
-
 
 namespace statsig::data_types::unreal_json_utils {
 

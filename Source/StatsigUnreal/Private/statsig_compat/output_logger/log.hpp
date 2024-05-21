@@ -2,13 +2,19 @@
 
 #include <string>
 
+#include "log_level.h"
+#include "statsig_compat/defines/module_definitions.h"
+
+#include "Logging/LogMacros.h"
 #include "Logging/StructuredLog.h"
+
+STATSIG_EXPORT DECLARE_LOG_CATEGORY_EXTERN(LogStatsig, Log, All);
 
 namespace statsig_compatibility {
 
 using LogLevel = statsig::LogLevel;
 
-class Log {
+class STATSIG_EXPORT Log {
 public:
   static LogLevel level;
 
@@ -30,7 +36,5 @@ public:
     }
   }
 };
-
-LogLevel Log::level = LogLevel::Error;
 
 }

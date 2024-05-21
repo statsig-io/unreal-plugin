@@ -1,13 +1,13 @@
 #pragma once
 
+#include <string>
+
+#include "evaluations_data_adapter.h"
+#include "statsig_compat/json_serialization/unreal_json_utils.hpp"
+
 #include "Dom/JsonObject.h"
 #include "Dom/JsonValue.h"
 #include "Templates/SharedPointer.h"
-
-#include "../evaluations_data_adapter.h"
-#include "unreal_json_utils.hpp"
-
-#include <string>
 
 namespace statsig::data_types::data_adapter_result {
 

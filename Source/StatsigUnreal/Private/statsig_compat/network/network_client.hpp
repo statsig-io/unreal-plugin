@@ -1,11 +1,20 @@
 #pragma once
 
 #include <functional>
+#include <optional>
+#include <string>
+#include <unordered_map>
+
 #include "HttpModule.h"
 #include "Interfaces/IHttpRequest.h"
 #include "Interfaces/IHttpResponse.h"
 
 namespace statsig::internal {
+
+inline std::unordered_map<std::string, std::string> GetDefaultPlatformHeaders() {
+  // no-op - the platform http implementation will add headers for supported encoding types.
+  return {};
+}
 
 struct HttpResponse {
   const std::string text;

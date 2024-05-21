@@ -1,14 +1,15 @@
 #pragma once
 
+#include <optional>
+#include <string>
+
+#include "statsig_compat/json_serialization/secondary_exposures_json.hpp"
+#include "statsig_compat/json_serialization/unreal_json_utils.hpp"
+#include "statsig_result.h"
+
 #include "Containers/UnrealString.h"
 #include "Dom/JsonObject.h"
 #include "Templates/SharedPointer.h"
-
-#include "secondary_exposures_json.hpp"
-#include "unreal_json_utils.hpp"
-
-#include <optional>
-#include <string>
 
 namespace statsig::data_types {
 
@@ -96,7 +97,7 @@ inline StatsigResult<data::InitializeResponse> FromJson(const TSharedPtr<FJsonOb
     }
   };
 
-  if (json->GetBoolField("has_updates") == false) {
+  if (json->GetBoolField(TEXT("has_updates")) == false) {
     return {Ok, {}};
   }
 

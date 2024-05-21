@@ -1,12 +1,14 @@
 #pragma once
 
+#include <string>
+#include <vector>
+
+#include "internal/initialize_response.hpp"
+#include "statsig_compat/json_serialization/unreal_json_utils.hpp"
+
 #include "Dom/JsonObject.h"
 #include "Dom/JsonValue.h"
 #include "Templates/SharedPointer.h"
-
-#include "unreal_json_utils.hpp"
-
-#include <string>
 
 namespace statsig::data_types::secondary_exposures {
 
