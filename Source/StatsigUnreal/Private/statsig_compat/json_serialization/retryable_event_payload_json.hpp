@@ -1,17 +1,17 @@
 #pragma once
 
+#include <optional>
+#include <string>
+#include <vector>
+
+#include "internal/statsig_event_internal.hpp"
+#include "statsig_event_json.hpp"
+
 #include "Containers/Array.h"
 #include "Containers/UnrealString.h"
 #include "Dom/JsonObject.h"
 #include "Dom/JsonValue.h"
 #include "Templates/SharedPointer.h"
-
-#include "statsig_event_internal.hpp"
-#include "statsig_event_json.hpp"
-
-#include <optional>
-#include <string>
-#include <vector>
 
 namespace statsig::data_types::retryable_event_payload {
 

@@ -1,15 +1,15 @@
 #pragma once
 
+#include <optional>
+#include <string>
+
+#include "internal/statsig_event_internal.hpp"
+#include "secondary_exposures_json.hpp"
+#include "statsig_user_json.hpp"
+
 #include "Containers/UnrealString.h"
 #include "Dom/JsonObject.h"
 #include "Templates/SharedPointer.h"
-
-#include "secondary_exposures_json.hpp"
-#include "statsig_event_internal.hpp"
-#include "statsig_user_json.hpp"
-
-#include <optional>
-#include <string>
 
 namespace statsig::data_types::statsig_event {
 

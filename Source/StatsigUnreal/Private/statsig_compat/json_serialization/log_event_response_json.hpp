@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Dom/JsonObject.h"
-#include "Templates/SharedPointer.h"
+#include <optional>
 
-#include "statsig_event_internal.hpp"
+#include "internal/statsig_event_internal.hpp"
 #include "unreal_json_utils.hpp"
 
-#include <optional>
+#include "Dom/JsonObject.h"
+#include "Templates/SharedPointer.h"
 
 namespace statsig::data_types::log_event_response {
 

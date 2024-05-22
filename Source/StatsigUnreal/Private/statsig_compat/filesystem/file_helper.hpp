@@ -1,13 +1,18 @@
-﻿#pragma once
+#pragma once
 
+#include <functional>
+#include <optional>
+
+#include "statsig_compat/primitives/file_path.hpp"
+#include "statsig_compat/primitives/string.hpp"
+#include "statsig_options.h"
+
+#include "Async/Async.h"
 #include "Containers/UnrealString.h"
 #include "HAL/PlatformFileManager.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
-
-#include "statsig_compat/primitives/string.hpp"
-
-#include <functional>
+#include "Misc/QueuedThreadPool.h"
 
 namespace statsig_compatibility {
 

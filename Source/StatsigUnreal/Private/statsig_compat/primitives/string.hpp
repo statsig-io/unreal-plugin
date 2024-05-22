@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+
+#include "Containers/StringConv.h"
 #include "Containers/UnrealString.h"
 
 namespace statsig {

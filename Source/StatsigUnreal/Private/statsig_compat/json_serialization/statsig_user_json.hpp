@@ -1,16 +1,18 @@
 #pragma once
 
+#include <optional>
+#include <string>
+
+#include "unreal_json_utils.hpp"
+#include "statsig_compat/primitives/string.hpp"
+#include "statsig_result.h"
+#include "statsig_user.h"
+
 #include "Containers/UnrealString.h"
 #include "Dom/JsonObject.h"
 #include "Policies/CondensedJsonPrintPolicy.h"
 #include "Serialization/JsonSerializer.h"
 #include "Templates/SharedPointer.h"
-
-#include "unreal_json_utils.hpp"
-#include "statsig_compat/primitives/string.hpp"
-
-#include <optional>
-#include <string>
 
 namespace statsig::data_types::statsig_user {
 

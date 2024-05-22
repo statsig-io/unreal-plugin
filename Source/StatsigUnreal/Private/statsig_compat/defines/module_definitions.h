@@ -1,0 +1,3 @@
+#pragma once
+
+#define STATSIG_EXPORT STATSIGUNREAL_API

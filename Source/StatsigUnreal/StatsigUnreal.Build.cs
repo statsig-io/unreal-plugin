@@ -6,8 +6,7 @@ public class StatsigUnreal : ModuleRules
 {
 	public StatsigUnreal(ReadOnlyTargetRules Target) : base(Target)
 	{
-		OptimizeCode = CodeOptimization.Never;
-
+		IWYUSupport = IWYUSupport.None;
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDefinitions.Add("STATSIG_UNREAL_PLUGIN=1");
@@ -33,18 +32,10 @@ public class StatsigUnreal : ModuleRules
 			}
 		);
 
-		PrivateIncludePaths.AddRange(
-			new string[]
-			{
-				"StatsigUnreal/statsig-cpp-client-sdk/src/statsig",
-				"StatsigUnreal/statsig-cpp-client-sdk/src/statsig/internal",
-			}
-		);
-
 		PublicIncludePaths.AddRange(new string[]
 		{
+			Path.Combine(ModuleDirectory, "Private"),
 			Path.Combine(ModuleDirectory, "statsig-cpp-client-sdk/src/statsig"),
-			Path.Combine(ModuleDirectory, "statsig-cpp-client-sdk/src/statsig/internal"),
 		});
 	}
 }

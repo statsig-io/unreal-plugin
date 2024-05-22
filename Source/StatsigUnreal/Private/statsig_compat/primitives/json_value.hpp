@@ -1,10 +1,16 @@
 #pragma once
 
-#include "Dom/JsonObject.h"
-#include "Dom/JsonValue.h"
-
 #include <optional>
 #include <string>
+#include <unordered_map>
+
+#include "statsig_compat/primitives/string.hpp"
+
+#include "Dom/JsonObject.h"
+#include "Dom/JsonValue.h"
+#include "Policies/CondensedJsonPrintPolicy.h"
+#include "Serialization/JsonSerializer.h"
+#include "Serialization/JsonWriter.h"
 
 namespace statsig {
 
@@ -16,10 +22,10 @@ inline JsonObject EmptyJsonObject() {
 }
 
 inline JsonValue GetJsonValueFromJsonObject(
-    const std::string key,
+    const String key,
     const JsonObject& object) {
   return object.IsValid()
-           ? object->Values[FString(key.c_str())]
+           ? object->TryGetField(key)
            : MakeShareable(new FJsonValueNull());
 }
 

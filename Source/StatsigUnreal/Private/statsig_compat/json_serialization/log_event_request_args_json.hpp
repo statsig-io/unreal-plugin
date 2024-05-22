@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Dom/JsonObject.h"
-#include "Dom/JsonValue.h"
-#include "Templates/SharedPointer.h"
+#include <string>
 
-#include "statsig_event_internal.hpp"
+#include "internal/statsig_event_internal.hpp"
 #include "statsig_event_json.hpp"
 #include "unreal_json_utils.hpp"
 
-#include <string>
+#include "Dom/JsonObject.h"
+#include "Dom/JsonValue.h"
+#include "Templates/SharedPointer.h"
 
 namespace statsig::data_types::log_event_request_args {
 
