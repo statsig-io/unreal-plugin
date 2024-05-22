@@ -10,7 +10,6 @@ public class StatsigUnreal : ModuleRules
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDefinitions.Add("STATSIG_UNREAL_PLUGIN=1");
-		PublicDefinitions.Add("STATSIG_WITH_COMPATIBILITY_OVERRIDE=1");
 
 		PublicDependencyModuleNames.AddRange(
 			new string[]
