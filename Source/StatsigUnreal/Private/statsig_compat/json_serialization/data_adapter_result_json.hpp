@@ -16,7 +16,9 @@ inline StatsigResult<std::string> Serialize(const DataAdapterResult& result) {
 
   json->SetStringField(TEXT("data"), FString(result.data.c_str()));
   json->SetNumberField(TEXT("source"), static_cast<int>(result.source));
-  json->SetNumberField(TEXT("receivedAt"), result.receivedAt);
+  json->SetNumberField(TEXT("receivedAt"), result.received_at);
+  json->SetStringField(
+      TEXT("fullUserHash"), FString(result.full_user_hash.c_str()));
 
   return {Ok, unreal_json_utils::JsonObjectToString(json)};
 }
@@ -32,12 +34,16 @@ inline StatsigResult<DataAdapterResult> Deserialize(const std::string& input) {
     return {JsonFailureDataAdapterResult};
   }
 
-  DataAdapterResult result;
+  const time_t received_at = json->GetNumberField(TEXT("receivedAt"));
+  DataAdapterResult result{
+      TCHAR_TO_UTF8(*json->GetStringField(TEXT("fullUserHash"))),
+      received_at
+  };
   result.data = TCHAR_TO_UTF8(*json->GetStringField(TEXT("data")));
   result.source =
       static_cast<ValueSource>(json->GetNumberField(TEXT("source")));
-  result.receivedAt = json->GetNumberField(TEXT("receivedAt"));
+
   return {Ok, result};
 }
 
-}  // namespace statsig::data_types::data_adapter_result
+} // namespace statsig::data_types::data_adapter_result
