@@ -105,7 +105,7 @@ inline StatsigResult<data::InitializeResponse> FromJson(const TSharedPtr<FJsonOb
     return {JsonFailureInitializeResponse};
   }
 
-  data::InitializeResponse response = {};
+  data::InitializeResponse response{};
 
   parse(TEXT("feature_gates"), response.feature_gates,
         gate_evaluation::FromJson);

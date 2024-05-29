@@ -20,6 +20,10 @@ class FileHelper {
 
 public:
   static statsig::FilePath GetCacheDir(const statsig::StatsigOptions &options) {
+    if (options.cache_directory.has_value()) {
+      return options.cache_directory.value();
+    }
+
     const auto project_dir = FPaths::ProjectPersistentDownloadDir();
     return FPaths::Combine(*project_dir, "Statsig");
   }

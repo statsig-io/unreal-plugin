@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <map>
 
 #include "statsig_compat/primitives/string.hpp"
 
@@ -43,7 +44,7 @@ inline std::vector<std::pair<String, String>> GetKeyValuePairs(const StringMap &
   }
 
   return ResultVector;
-
 }
+
 
 }
