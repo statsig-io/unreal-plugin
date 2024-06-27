@@ -3,6 +3,7 @@
 #include <functional>
 #include <optional>
 
+#include "statsig_compat/output_logger/log.hpp"
 #include "statsig_compat/primitives/file_path.hpp"
 #include "statsig_compat/primitives/string.hpp"
 #include "statsig_options.h"
@@ -36,6 +37,7 @@ public:
   ) {
     AsyncPool(*GIOThreadPool, [content, path, callback] {
       FFileHelper::SaveStringToFile(statsig::ToCompat(content), *path);
+      Log::Debug("FileHelper: Wrote " + std::to_string(content.length()) + " characters to path " + statsig::FromCompat(path));
       callback(true);
     });
   }
@@ -51,6 +53,7 @@ public:
   static std::optional<std::string> ReadStringToFile(const statsig::FilePath &path) {
     FString result;
     if (FFileHelper::LoadFileToString(result, *path)) {
+      Log::Debug("FileHelper: Read " + std::to_string(result.Len()) + " characters from path " + statsig::FromCompat(path));
       return statsig::FromCompat(result);
     }
     return std::nullopt;

@@ -34,8 +34,8 @@ public class StatsigUnreal : ModuleRules
 
 		PublicIncludePaths.AddRange(new string[]
 		{
-			Path.Combine(ModuleDirectory, "Private"),
-			Path.Combine(ModuleDirectory, "statsig-cpp-client-sdk/src/statsig"),
+			Path.Combine(ModuleDirectory, "ThirdParty/unreal-integration"),
+			Path.Combine(ModuleDirectory, "ThirdParty/statsig-cpp-client-sdk/src/statsig"),
 		});
 	}
 }

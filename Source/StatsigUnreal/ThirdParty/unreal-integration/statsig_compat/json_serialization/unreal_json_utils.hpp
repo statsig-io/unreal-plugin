@@ -126,10 +126,10 @@ JsonObjectToUnorderedCompatStringMap(
 
   if (json_object.IsValid()) {
     for (auto it = json_object->Values.CreateConstIterator(); it; ++it) {
-      const FString key = it.Key();
-      const FString value = json_object->GetStringField(key);
+      FString key = it.Key();
+      FString value = json_object->GetStringField(key);
 
-      result_map[key] = value;
+      result_map.Emplace(MoveTemp(key), MoveTemp(value));
     }
   }
 
