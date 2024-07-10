@@ -25,7 +25,7 @@ inline std::unordered_map<std::string, std::string> FromCompat(const StringMap& 
 inline StringMap ToCompat(const std::unordered_map<std::string, std::string>& input) {
   StringMap result;
   for (const auto& [fst, snd] : input) {
-    result[ToCompat(fst)] = ToCompat(snd);
+    result.Emplace(ToCompat(fst), ToCompat(snd));
   }
   return result;
 }
